@@ -6,4 +6,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\AdminPanel\Data\" />
+    <Folder Include="Areas\ContentManagerPanel\Controllers\" />
+    <Folder Include="Areas\ContentManagerPanel\Data\" />
+    <Folder Include="Areas\ContentManagerPanel\Models\" />
+    <Folder Include="Areas\CustomerServicePanel\Controllers\" />
+    <Folder Include="Areas\CustomerServicePanel\Data\" />
+    <Folder Include="Areas\CustomerServicePanel\Models\" />
+    <Folder Include="wwwroot\ProductPictures\" />
+  </ItemGroup>
+
 </Project>

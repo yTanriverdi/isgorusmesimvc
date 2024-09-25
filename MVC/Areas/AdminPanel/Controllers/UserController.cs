@@ -1,10 +1,14 @@
-﻿using ApplicationLayer.Models.DTOs;
-using AspNetCore;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Areas.AdminPanel.Models.VMs.User;
 using MVC.Models.DTOs;
 
-namespace MVC.Controllers
+namespace MVC.Areas.AdminPanel.Controllers
 {
+    [Area("AdminPanel")]
+    [Authorize("Admin")]
+
     public class UserController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -29,10 +33,10 @@ namespace MVC.Controllers
         /// <returns></returns>
         public async Task<IActionResult> GetAllUserByRoles()
         {
-            var users=await _httpClient.GetAsync($"{uri}/GetAllUsers");
-            if(users.IsSuccessStatusCode)
+            var users = await _httpClient.GetAsync($"{uri}/GetAllUsers");
+            if (users.IsSuccessStatusCode)
             {
-                var userList = await users.Content.ReadFromJsonAsync<List<UserDetailDTO>>();
+                var userList = await users.Content.ReadFromJsonAsync<List<UserDetailVM>>();
                 var userByRoles = userList.GroupBy(x => x.Role).ToDictionary(x => x.Key, a => a.ToList());
                 return View(userByRoles);   //rollere göre kullanıcıları gruplayıp view de listeliyoruz
             }
@@ -49,30 +53,29 @@ namespace MVC.Controllers
             var user = await _httpClient.GetAsync($"{uri}/GetUserDetail/{userId}");
             if (user.IsSuccessStatusCode)
             {
-                var userDetail = await user.Content.ReadFromJsonAsync<UserDetailDTO>();
+                var userDetail = await user.Content.ReadFromJsonAsync<UserDetailVM>();
                 return View(userDetail);
             }
             return View();
         }
 
 
-
-        //public async Task<IActionResult> UpdateAdmin(int userId)
-        //{
-        //    var user = await _httpClient.PutAsJsonAsync($"{uri}/UpdateAdmin/{userId}");
-        //}
-
-
+        [HttpGet]
+        public IActionResult UpdateAdmin(int userId)
+        {
+            return View();
+        }
 
 
 
-
-
-
-
-
-
-
+        [HttpPost]
+        public async Task<IActionResult> UpdateAdmin(int userId, UpdateUserVM updateUserVM)
+        {
+            var user = await _httpClient.PutAsJsonAsync($"{uri}/UpdateAdmin/{userId}", updateUserVM);
+            if (user.IsSuccessStatusCode)
+                return RedirectToAction("GetAllUserByRoles");
+            return View(updateUserVM);
+        }
 
     }
 }
