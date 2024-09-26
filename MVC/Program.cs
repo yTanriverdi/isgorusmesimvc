@@ -18,6 +18,13 @@ namespace MVC
 
 
             builder.Services.AddHttpClient();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Session süresi
+                options.Cookie.HttpOnly = true; // Güvenlik için
+                options.Cookie.IsEssential = true; // Çerezler zorunlu
+            });
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(opt =>
             {
@@ -27,6 +34,15 @@ namespace MVC
                 opt.AccessDeniedPath = "/Account/AccessDeny";   //ac. view hata sayfasýdýr.
             });
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireRole("Admin"); // Admin rolüne sahip kullanýcýlarý yetkilendir
+                });
+                
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,12 +50,13 @@ namespace MVC
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+         
             app.UseStaticFiles();
 
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

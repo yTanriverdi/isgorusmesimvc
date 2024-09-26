@@ -1,9 +1,4 @@
-﻿@* @using MVC.Areas.AdminPanel.Models.VMs.User
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<AppUserVM> SignInManager
-@inject UserManager<AppUserVM> UserManager
-@inject IHttpContextAccessor HttpContextAccessor
-
+﻿
 
 <ul class="navbar-nav">
     @{
@@ -12,118 +7,27 @@
         bool userIsCustomerService = false;
         bool userIsVisitor = false;
 
-        AppUserVM user = null;
-
-        if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+        if (User.IsInRole != null)
         {
-            // Kullanıcı oturumunu burada kontrol ediyoruz
-            user = await GetLoggedInUserAsync(); // Kullanıcı bilgilerini elde edeceğiz
-            if (user != null && user.Roles != null)
-            {
-                userIsAdmin = user.Roles.Contains("Admin");
-                userIsContentManager = user.Roles.Contains("ContentManager");
-                userIsCustomerService = user.Roles.Contains("CustomerService");
-                userIsVisitor = user.Roles.Contains("Visitor");
-            }
+            // string user= @Model.UserRoles.FirstOrDefault();
+            if (User.IsInRole("Admin"))
+                userIsAdmin = true;
+           else if (User.IsInRole("ContentManager"))
+                userIsContentManager = true;
+           else if (User.IsInRole("CustomerService"))
+                userIsCustomerService = true;
+           else if (User.IsInRole("Visitor"))
+                userIsVisitor = true;
+
+            
+            
         }
     }
 
-    @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark">Hello @user?.FirstName!</a>
-        </li>
-
-        @if (userIsAdmin)
-        {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Product" asp-action="Create">Admin Panel</a>
-            </li>
-        }
-        else if (userIsContentManager)
-        {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Panel" asp-action="Index">Content Manager Panel</a>
-            </li>
-        }
-        else if (userIsCustomerService)
-        {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="CustomerServicePanel" asp-controller="Panel" asp-action="Index">Customer Service Panel</a>
-            </li>
-        }
-        else if (userIsVisitor)
-        {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="VisitorPanel" asp-controller="Panel" asp-action="Index">Visitor Panel</a>
-            </li>
-        }
-
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="" asp-controller="Login" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-controller="Account" asp-action="Create">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-controller="Account" asp-action="Login">Login</a>
-        </li>
-    }
-</ul>
-
-@functions {
-    private async Task<AppUserVM> GetLoggedInUserAsync()
-    {
-        // Burada HTTP isteği veya servis katmanı üzerinden giriş yapmış kullanıcının bilgilerini alabilirsiniz
-        // Örneğin, UserManager kullansanız şu şekilde yapabilirsiniz:
-        // return await UserManager.GetUserAsync(HttpContextAccessor.HttpContext.User);
-
-        // Şu anlık sadece test için hardcoded bir AppUser döndürüyoruz
-        return new AppUserVM
-            {
-                FirstName = "John",
-                Roles = new List<string> { "Admin" } // Roller burada dinamik olarak gelmeli
-            };
-    }
-} *@
-
-
-
-@using MVC.Areas.AdminPanel.Models.VMs.User
-@using Microsoft.AspNetCore.Identity
-
-@inject SignInManager<AppUserVM> SignInManager
-@inject UserManager<AppUserVM> UserManager
-
-<ul class="navbar-nav">
-    @{
-        bool userIsAdmin = false;
-        bool userIsContentManager = false;
-        bool userIsCustomerService = false;
-        bool userIsVisitor = false;
-
-        if (User != null)
-        {
-            AppUserVM user = await UserManager.GetUserAsync(User);
-            if (user != null)
-            {
-                userIsAdmin = await UserManager.IsInRoleAsync(user, "Admin");
-                userIsContentManager = await UserManager.IsInRoleAsync(user, "ContentManager");
-                userIsCustomerService = await UserManager.IsInRoleAsync(user, "CustomerService");
-                userIsVisitor = await UserManager.IsInRoleAsync(user, "Visitor");
-            }
-        }
-    }
-
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark">Hello @UserManager.GetUserName(User)!</a>
+            <a id="manage" class="nav-link text-dark">Hello @User.Identity.Name</a>
         </li>
 
         @if (userIsAdmin)
@@ -152,18 +56,16 @@
         }
 
         <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="" asp-controller="Login" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
+            <a id="manage" class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış</a>  
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-controller="Login" asp-action="RegisterUser">Register</a>
+            <a class="nav-link text-dark" id="register" asp-controller="Account" asp-action="Create">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-controller="Login" asp-action="Index">Login</a>
+            <a class="nav-link text-dark" id="login" asp-controller="Account" asp-action="Login">Login</a>
         </li>
     }
 </ul>

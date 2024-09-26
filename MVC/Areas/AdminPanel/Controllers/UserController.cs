@@ -24,8 +24,8 @@ namespace MVC.Areas.AdminPanel.Controllers
         }
 
 
-        //string uri = "http://localhost:5211/api/User";
-        string uri = "https://api20240918230552.azurewebsites.net//api/User";
+        string uri = "http://localhost:5211/api/User";
+        //string uri = "https://api20240918230552.azurewebsites.net//api/User";
 
         /// <summary>
         /// Sisteme kayıt olan tüm kullanıcıları rollerine göre listeleme metodu

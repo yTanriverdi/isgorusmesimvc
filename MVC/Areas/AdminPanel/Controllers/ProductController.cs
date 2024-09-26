@@ -8,7 +8,7 @@ using MVC.Areas.AdminPanel.Models.VMs.Product;
 namespace MVC.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-    [Authorize("Admin")]
+    [Authorize(Roles = "Admin")]
 
     public class ProductController : Controller
     {
