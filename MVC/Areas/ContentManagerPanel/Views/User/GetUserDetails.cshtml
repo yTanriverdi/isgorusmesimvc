@@ -1,0 +1,34 @@
+﻿@using MVC.Areas.AdminPanel.Models.VMs.User
+@model UserDetailVM
+
+<h2>Kullanıcı Detayları</h2>
+
+@if (Model != null)
+{
+    <table class="table table-striped">
+        <tr>
+            <th>Ad</th>
+            <td>@Model.FirstName</td>
+        </tr>
+        <tr>
+            <th>Soyad</th>
+            <td>@Model.LastName</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <th>Rol</th>
+            <td>@Model.Role</td>
+        </tr>
+    </table>
+}
+
+else
+{
+    <p>Kullanıcı bilgisi bulunamadı.</p>
+}
+<div>
+    <a class="btn btn-success" asp-action="UpdateAdmin" asp-controller="User" asp-area="ContentManagerPanel" asp-route-userId="@Model.Id">Profil Bilgilerini Güncelle</a>
+</div>

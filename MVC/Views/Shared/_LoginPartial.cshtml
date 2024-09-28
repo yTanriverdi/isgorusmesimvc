@@ -1,4 +1,5 @@
-﻿
+﻿@using System.Security.Claims
+
 
 <ul class="navbar-nav">
     @{
@@ -18,9 +19,6 @@
                 userIsCustomerService = true;
            else if (User.IsInRole("Visitor"))
                 userIsVisitor = true;
-
-            
-            
         }
     }
 
@@ -33,13 +31,37 @@
         @if (userIsAdmin)
         {
             <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Panel" asp-action="Index">Admin Panel</a>
+                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProducts">Tüm Ürünler</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Product" asp-action="Create">Ürün Ekle</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Category" asp-action="GetAllCategories">Tüm Kategoriler</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Category" asp-action="Create">Kategori Ekle</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="User" asp-action="GetAllUserByRoles">Kullanıcılar</a>
             </li>
         }
         else if (userIsContentManager)
         {
             <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Panel" asp-action="Index">Content Manager Panel</a>
+                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Product" asp-action="GetAllProducts">Tüm Ürünler</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Product" asp-action="Create">Ürün Ekle</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Category" asp-action="GetAllCategories">Tüm Kategoriler</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Category" asp-action="Create">Kategori Ekle</a>
+            </li>
+            <li class="nav-item">
+                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="User" asp-action="GetUserDetails" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profili Görüntüle</a>
             </li>
         }
         else if (userIsCustomerService)

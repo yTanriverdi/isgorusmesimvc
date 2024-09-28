@@ -7,5 +7,7 @@
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Role { get; set; } // Kullanıcının rol bilgisi
+        public int SelectedRoleId { get; set; }
+
     }
 }

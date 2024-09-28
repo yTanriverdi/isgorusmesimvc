@@ -14,10 +14,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input asp-for="CreateProduct.ProductName" class="form-control" type="hidden" />
-                <span asp-validation-for="CreateProduct.ProductName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="CreateProduct.ProductName" class="control-label"></label>
                 <input asp-for="CreateProduct.ProductName" class="form-control" />
                 <span asp-validation-for="CreateProduct.ProductName" class="text-danger"></span>
@@ -50,7 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="GetAllProducts" asp-controller="Product" asp-area="AdminPanel">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

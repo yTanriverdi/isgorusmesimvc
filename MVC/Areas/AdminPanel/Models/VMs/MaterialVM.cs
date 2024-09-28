@@ -2,7 +2,7 @@
 {
     public class MaterialVM
     {
-        public int Id { get; set; }
+        public int MaterialId { get; set; }
         public string Name { get; set; }
     }
 }

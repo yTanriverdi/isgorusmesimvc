@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Areas.AdminPanel.Models.VMs.Category;
-using MVC.Areas.AdminPanel.Models.VMs.Product;
 
-namespace MVC.Areas.AdminPanel.Controllers
+
+namespace MVC.Areas.ContentManagerPanel.Controllers
 {
-    [Area("AdminPanel")]
-    [Authorize(Roles ="Admin")]
+    [Area("ContentManagerPanel")]
+    [Authorize(Roles = "ContentManager")]
     public class CategoryController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -33,33 +33,11 @@ namespace MVC.Areas.AdminPanel.Controllers
         //kategori id ile o kategoriye ait ürünleri listeleme
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            //var response = await _httpClient.GetAsync($"{uri}/GetCategoryById/{CategoryId}");
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var products = await response.Content.ReadFromJsonAsync<List<GetAllProductsOfCategoryVM>>();
-            //    return View(products);
-            //}
-            //return NotFound();
             var response = await _httpClient.GetAsync($"{uri}/GetCategoryById/{id}");
             if (response.IsSuccessStatusCode)
             {
-                // GetAllProductsOfCategoryDTO döndüğünden doğru türde okumalıyız
                 var categoryData = await response.Content.ReadFromJsonAsync<GetAllProductsOfCategoryVM>();
 
-                //if (categoryData != null)
-                //{
-                //    // ViewModel'i doldur
-                //    var viewModel = new GetAllProductsOfCategoryVM
-                //    {
-                //        CategoryId = categoryData.CategoryId,
-                //        CategoryName = categoryData.CategoryName,
-                //        Products = categoryData.Products // Eğer Products ICollection türündeyse, burası doğru çalışacaktır.
-                //    };
-
-                //    return View(viewModel);
-                //}
-
-           
                 return View(categoryData); // Kategori yoksa
             }
             return NotFound(); // API çağrısı başarısızsa
@@ -96,7 +74,7 @@ namespace MVC.Areas.AdminPanel.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update( Category category)
+        public async Task<IActionResult> Update(Category category)
         {
             var response = await _httpClient.PutAsJsonAsync($"{uri}/UpdateCategory", category);
             if (response.IsSuccessStatusCode)
@@ -117,7 +95,7 @@ namespace MVC.Areas.AdminPanel.Controllers
 
 
         //Category aktif etme(metodunu repo-servise-api'de yazman lazım.Sonra burada oluştur)
-    
+
 
 
 
@@ -128,7 +106,7 @@ namespace MVC.Areas.AdminPanel.Controllers
             var response = await _httpClient.GetAsync($"{uri}/Category/{keyword}");
             if (response.IsSuccessStatusCode)
             {
-                var categories=await response.Content.ReadFromJsonAsync<List<Category>>();
+                var categories = await response.Content.ReadFromJsonAsync<List<Category>>();
                 return View(categories);
             }
             return NotFound();
