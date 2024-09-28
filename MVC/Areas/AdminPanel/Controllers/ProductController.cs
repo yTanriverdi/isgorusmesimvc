@@ -5,15 +5,6 @@ using Microsoft.CodeAnalysis;
 using MVC.Areas.AdminPanel.Models.VMs;
 using MVC.Areas.AdminPanel.Models.VMs.Category;
 using MVC.Areas.AdminPanel.Models.VMs.Product;
-<<<<<<< HEAD
-using Product = MVC.Areas.AdminPanel.Models.VMs.Product.Product;
-=======
-using MVC.Models;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
->>>>>>> origin/contentmanager
 
 namespace MVC.Areas.AdminPanel.Controllers
 {
