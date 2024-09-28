@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MVC.Areas.ContentManagerPanel.Models.DTOs.Blog.BlogDTO>
+
+@{
+    ViewData["Title"] = "GetAllBlogs";
+}
+
+<h1>GetAllBlogs</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <form class="d-flex" method="get" asp-area="ContentManagerPanel" asp-controller="Blog" asp-action="Search">
+            <input class="form-control me-2" type="search" name="keyword" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+@if (!string.IsNullOrEmpty(ViewBag.Keyword))
+{
+    <p>Showing results for: <strong>@ViewBag.Keyword</strong></p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-area="ContentManagerPanel" asp-controller="Blog" asp-action="Update" asp-route-id="@item.BlogId">Update</a> |
+                    @Html.ActionLink("Details", "Details", new { id = item.BlogId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BlogId })
+            </tr>
+        }
+    </tbody>
+</table>

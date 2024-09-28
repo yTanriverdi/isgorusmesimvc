@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MVC.Areas.ContentManagerPanel.Models.DTOs.Blog.BlogDTO>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BlogId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.keyword)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BlogId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.keyword)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-area="ContentManagerPanel" asp-controller="Blog" asp-action="Update" asp-route-id="@item.BlogId">Update</a> |
+                    @Html.ActionLink("Details", "Details", new { id = item.BlogId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BlogId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

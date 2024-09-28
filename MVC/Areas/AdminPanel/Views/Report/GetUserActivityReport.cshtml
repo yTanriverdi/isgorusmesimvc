@@ -1,0 +1,143 @@
+﻿@model IEnumerable<MVC.Areas.AdminPanel.Models.VMs.Report.GetUserActivityReportVM>
+
+@{
+    ViewData["Title"] = "GetUserActivityReport";
+}
+
+<h1>GetUserActivityReport</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Product.ProductName)</th>
+            <th>@Html.DisplayNameFor(model => model.AppUser.Email)</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRefundRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptRefundRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompletedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptContentManager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptCustomerService)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptVisitor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSample)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsMold)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsFinalization)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeleteDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
+                <td>@Html.DisplayFor(modelItem => item.AppUser.Email)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsRefundRequest)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcceptRefundRequest)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcceptAdmin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcceptContentManager)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcceptCustomerService)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcceptVisitor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsApproved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsSample)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsMold)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsFinalization)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeleteDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

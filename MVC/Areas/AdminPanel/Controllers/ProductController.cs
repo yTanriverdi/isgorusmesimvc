@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC.Areas.AdminPanel.Models.VMs;
 using MVC.Areas.AdminPanel.Models.VMs.Category;
 using MVC.Areas.AdminPanel.Models.VMs.Product;
+using Product = MVC.Areas.AdminPanel.Models.VMs.Product.Product;
 
 namespace MVC.Areas.AdminPanel.Controllers
 {
@@ -27,7 +28,7 @@ namespace MVC.Areas.AdminPanel.Controllers
             var response = await _httpClient.GetAsync($"{uri}/Product/GetAllProducts");
             if (response.IsSuccessStatusCode)
             {
-                var products = await response.Content.ReadFromJsonAsync<List<ListProduct>>();
+                var products = await response.Content.ReadFromJsonAsync<List<Product>>();
                 return View(products);
             }
             return NoContent();
