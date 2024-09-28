@@ -1,29 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis;
 using MVC.Areas.AdminPanel.Models.VMs;
 using MVC.Areas.AdminPanel.Models.VMs.Category;
 using MVC.Areas.AdminPanel.Models.VMs.Product;
-<<<<<<< HEAD
-using Product = MVC.Areas.AdminPanel.Models.VMs.Product.Product;
-=======
-using MVC.Models;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
->>>>>>> origin/contentmanager
 
-namespace MVC.Areas.AdminPanel.Controllers
+namespace MVC.Areas.ContentManagerPanel.Controllers
 {
-    [Area("AdminPanel")]
-    [Authorize(Roles = "Admin")]
+    [Area("ContentManagerPanel")]
+    [Authorize(Roles = "ContentManager")]
 
     public class ProductController : Controller
     {
         private readonly HttpClient _httpClient;
-
 
         public ProductController(HttpClient httpClient)
         {
@@ -38,87 +28,18 @@ namespace MVC.Areas.AdminPanel.Controllers
             var response = await _httpClient.GetAsync($"{uri}/Product/GetAllProducts");
             if (response.IsSuccessStatusCode)
             {
-                var products = await response.Content.ReadFromJsonAsync<List<Product>>();
+                var products = await response.Content.ReadFromJsonAsync<List<ListProduct>>();
                 return View(products);
             }
             return NoContent();
         }
 
 
-        public async Task<IActionResult> UploadProductImage(int ProductId)
-        {
-            var response = await _httpClient.GetAsync($"{uri}/Product/FindProduct/{ProductId}");
-            if (response.IsSuccessStatusCode)
-            {
-                var product = await response.Content.ReadAsStringAsync();
-                bool productExists = bool.Parse(product); // veya JsonConvert.DeserializeObject<bool>(content) kullanabilirsiniz
-
-                if (productExists)
-                {
-                    var vm = new UploadProductImageVM
-                    {
-                        ProductId = ProductId
-                    };
-                    return View(vm);
-                }
-            }
-            return NotFound();
-        }
-
-        //ürüne resim ekleme metodu
-        [HttpPost]
-        public async Task<IActionResult> UploadProductImage(UploadProductImageVM vm)
-        {
-            if (vm.File == null || vm.File.Length == 0)
-                return View("Error", new ErrorViewModel { RequestId = "No file uploaded." });
-
-            using (var content = new MultipartFormDataContent())
-            {
-                var fileContent = new StreamContent(vm.File.OpenReadStream());
-                fileContent.Headers.ContentType = new MediaTypeHeaderValue(vm.File.ContentType);
-                content.Add(fileContent, "file", vm.File.FileName);
-
-                try
-                {
-                    var response = await _httpClient.PostAsync($"{uri}/product/UploadProductImage/{vm.ProductId}", content);
-					var jsonResponse = await response.Content.ReadAsStringAsync();
-					var responseData = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
-					var imageUrl = responseData.imageUrl.ToString();
-                    await Console.Out.WriteLineAsync(imageUrl);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        // Hata mesajını okuyun ve hata sayfasına gönderin
-                        var errorMessage = await response.Content.ReadAsStringAsync();
-                        return View("Error", new ErrorViewModel
-                        {
-                            RequestId = $"File upload failed. Server response: {errorMessage}"
-                        });
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Hata oluşursa hata sayfasına yönlendirin
-                    return View("Error", new ErrorViewModel
-                    {
-                        RequestId = $"An error occurred: {ex.Message}"
-                    });
-                }
-            }
-
-            // Başarılı yüklemeden sonra detay sayfasına yönlendirin
-            return RedirectToAction("GetAllProducts","Product",new {area="AdminPanel"});
-      
-        }
-
-
-
-
-
         //ürün ekleme
         public async Task<IActionResult> Create()
         {
-            CreateProductVM Createvm = new CreateProductVM();
-            var response = await _httpClient.GetAsync($"{uri}/Category/GetAllCategories");
+			CreateProductVM Createvm = new CreateProductVM();
+			var response = await _httpClient.GetAsync($"{uri}/Category/GetAllCategories");
             if (response.IsSuccessStatusCode)
             {
                 var categories = await response.Content.ReadFromJsonAsync<List<Category>>();
@@ -142,11 +63,11 @@ namespace MVC.Areas.AdminPanel.Controllers
                 var categories = await response.Content.ReadFromJsonAsync<List<Category>>();
                 foreach (var item in categories)
                 {
-                    if (vm.CreateProduct.CategoryId == item.CategoryId)
+                    if(vm.CreateProduct.CategoryId == item.CategoryId)
                     {
-                        Category category = new Category();
-                        category.CategoryId = item.CategoryId;
-                        category.CategoryName = item.CategoryName;
+                        Category category= new Category();
+                        category.CategoryId=item.CategoryId;
+                        category.CategoryName=item.CategoryName;
                     }
                 }
                 vm.Categories = categories.Select(x => new SelectListItem() { Text = x.CategoryName, Value = x.CategoryId.ToString() }).ToList();
@@ -166,14 +87,14 @@ namespace MVC.Areas.AdminPanel.Controllers
                 }
                 vm.Materials = materials.Select(x => new SelectListItem() { Text = x.Name, Value = x.MaterialId.ToString() }).ToList();
             }
-
-            var response2 = await _httpClient.PostAsJsonAsync($"{uri}/Product/AddProduct", vm.CreateProduct);
-            if (response2.IsSuccessStatusCode)
-            {
-                return RedirectToAction("GetAllProducts");
-            }
-            return View(vm);
-
+           
+				var response2 = await _httpClient.PostAsJsonAsync($"{uri}/Product/AddProduct", vm.CreateProduct);
+				if (response2.IsSuccessStatusCode)
+				{
+					return RedirectToAction("GetAllProducts");
+				}
+                return View(vm);
+			
         }
 
         UpdateProductVM Updatevm = new UpdateProductVM();
@@ -242,7 +163,7 @@ namespace MVC.Areas.AdminPanel.Controllers
         public async Task<IActionResult> Details(int ProductId)
         {
             var reponse = await _httpClient.GetAsync($"{uri}/Product/GetProductById/{ProductId}");
-            if (reponse.IsSuccessStatusCode)
+            if(reponse.IsSuccessStatusCode)
             {
                 var product = await reponse.Content.ReadFromJsonAsync<GetProductDetailsVM>();
                 return View(product);

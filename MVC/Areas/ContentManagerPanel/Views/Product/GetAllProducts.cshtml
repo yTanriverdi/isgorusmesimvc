@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC.Areas.AdminPanel.Models.VMs.Product.Product>
+﻿@model IEnumerable<MVC.Areas.AdminPanel.Models.VMs.Product.ListProduct>
 
 @{
 	ViewData["Title"] = "GetAllProducts";
@@ -47,28 +47,22 @@
 					@Html.DisplayFor(modelItem => item.Likes)
 				</td>
 				<td>
-						<img src="@item.Picture" alt="Ürün Resmi" style="max-width:100px; max-height:100px;" />
-				
+					@Html.DisplayFor(modelItem => item.Picture)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.IsActive)
 				</td>
 				<td>
-					<a class="btn btn-warning" asp-action="Update" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Güncelle</a>
-					<a class="btn btn-success" asp-action="Details" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Detay Görüntüle</a>
-					@if(item.Picture is null)
-					{
-						<a class="btn btn-success" asp-action="UploadProductImage" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Ürüne Resim ekle </a>
-					}
-				
+					<a asp-action="Update" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Güncelle</a>
+					<a asp-action="Details" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Detay Görüntüle</a>
 					@if (item.IsActive)
 					{
-						<a class="btn btn-success" asp-action="ActiveProduct" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Aktif Et</a>
+						<a asp-action="ActiveProduct" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Aktif Et</a>
 
 					}
 					else
 					{
-						<a class="btn btn-danger" asp-action="Delete" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Pasif Et</a>
+						<a asp-action="Delete" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Pasif Et</a>
 
 					}
 				</td>

@@ -70,7 +70,7 @@ namespace MVC.Controllers
                             return RedirectToAction("Create", "Product", new { area = "AdminPanel" });
                         //return RedirectToAction("Index", "Home");
                         else if (userLoginResult.UserRoles.Contains("ContentManager"))
-                            return RedirectToAction("Index", "Home", new { area = "ContentManagerPanel" });
+                            return RedirectToAction("GetAllProducts", "Product", new { area = "ContentManagerPanel" });
                         else if (userLoginResult.UserRoles.Contains("CustomerService"))
                             return RedirectToAction("Index", "Home", new { area = "CustomerServicePanel" });
                         else if (userLoginResult.UserRoles.Contains("Visitor"))
