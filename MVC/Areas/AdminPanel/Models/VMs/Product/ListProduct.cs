@@ -1,6 +1,6 @@
 ﻿namespace MVC.Areas.AdminPanel.Models.VMs.Product
 {
-    public class Product
+    public class ListProduct
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }

@@ -1,0 +1,35 @@
+﻿@using MVC.Areas.AdminPanel.Models.VMs.Product
+@model UploadProductImageVM
+
+@{
+    ViewBag.Title = "Resim Yükleme";
+}
+
+<h2>Ürün Resmi Yükleme</h2>
+
+<div class="container">
+    <form asp-action="UploadProductImage" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" /> <!-- ProductId'yi modelden alıyoruz -->
+
+        <div class="form-group">
+            <label asp-for="File">Resim Seçin:</label>
+            <input asp-for="File" type="file" class="form-control-file" accept="image/*" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Resmi Yükle</button>
+    </form>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mt-3">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success mt-3">
+            @ViewBag.SuccessMessage
+        </div>
+    }
+</div>

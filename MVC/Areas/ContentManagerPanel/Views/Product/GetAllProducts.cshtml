@@ -1,72 +1,71 @@
 ﻿@model IEnumerable<MVC.Areas.AdminPanel.Models.VMs.Product.ListProduct>
 
 @{
-	ViewData["Title"] = "GetAllProducts";
+    ViewData["Title"] = "GetAllProducts";
 }
 
 <h1>GetAllProducts</h1>
 
 <p>
-	<a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.ProductId)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.ProductName)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Price)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Likes)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Picture)
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.ProductId)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.ProductName)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Price)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Likes)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Picture)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.IsActive)
-				</td>
-				<td>
-					<a asp-action="Update" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Güncelle</a>
-					<a asp-action="Details" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Detay Görüntüle</a>
-					@if (item.IsActive)
-					{
-						<a asp-action="ActiveProduct" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Aktif Et</a>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Likes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Picture)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a asp-action="Update" asp-controller="Product" asp-area="ContentManagerPanel" asp-route-ProductId="@item.ProductId">Güncelle</a>
+                    <a asp-action="Details" asp-controller="Product" asp-area="ContentManagerPanel" asp-route-ProductId="@item.ProductId">Detay Görüntüle</a>
+                    @if (item.IsActive)
+                    {
+                        <a asp-action="ActiveProduct" asp-controller="Product" asp-area="ContentManagerPanel" asp-route-ProductId="@item.ProductId">Aktif Et</a>
 
-					}
-					else
-					{
-						<a asp-action="Delete" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Pasif Et</a>
-
-					}
-				</td>
-			</tr>
-		}
-	</tbody>
+                    }
+                    else
+                    {
+                        <a asp-action="Delete" asp-controller="Product" asp-area="ContentManagerPanel" asp-route-ProductId="@item.ProductId">Pasif Et</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

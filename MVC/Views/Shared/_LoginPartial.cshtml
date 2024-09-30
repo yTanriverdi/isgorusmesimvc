@@ -13,56 +13,45 @@
             // string user= @Model.UserRoles.FirstOrDefault();
             if (User.IsInRole("Admin"))
                 userIsAdmin = true;
-           else if (User.IsInRole("ContentManager"))
+            else if (User.IsInRole("ContentManager"))
                 userIsContentManager = true;
-           else if (User.IsInRole("CustomerService"))
+            else if (User.IsInRole("CustomerService"))
                 userIsCustomerService = true;
-           else if (User.IsInRole("Visitor"))
+            else if (User.IsInRole("Visitor"))
                 userIsVisitor = true;
         }
     }
 
     @if (User.Identity.IsAuthenticated)
     {
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark">Hello @User.Identity.Name</a>
-        </li>
+        <div class="list-group mt-3">
+            <a id="manage" class="list-group-item list-group-item-action text-dark">Hello @User.Identity.Name</a>
+        </div>
 
         @if (userIsAdmin)
         {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProducts">Tüm Ürünler</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Product" asp-action="Create">Ürün Ekle</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Category" asp-action="GetAllCategories">Tüm Kategoriler</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="Category" asp-action="Create">Kategori Ekle</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="AdminPanel" asp-controller="User" asp-action="GetAllUserByRoles">Kullanıcılar</a>
-            </li>
+            <div class="list-group">
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profil Bilgilerimi Düzenle</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="User" asp-action="GetAllUserByRoles">Kullanıcı Yönetimi</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCart" asp-action="">Satışlar</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProducts">Ürün Yönetimi</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Category" asp-action="GetAllCategories">Kategori Yönetimi</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Refund" asp-action="">İade Talepleri</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="" asp-action="">İşlem Onayları</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Log" asp-action="">Log Raporları</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCart" asp-action="">İletişim Kontrolü</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Report" asp-action="Index">İstatiksel Raporlar</a>
+            </div>
+
         }
         else if (userIsContentManager)
         {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Product" asp-action="GetAllProducts">Tüm Ürünler</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Product" asp-action="Create">Ürün Ekle</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Category" asp-action="GetAllCategories">Tüm Kategoriler</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="Category" asp-action="Create">Kategori Ekle</a>
-            </li>
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="ContentManagerPanel" asp-controller="User" asp-action="GetUserDetails" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profili Görüntüle</a>
-            </li>
+            <div class="list-group">
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profil Bilgilerimi Düzenle</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="Product" asp-action="GetAllProducts">Ürün Yönetimi</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="Category" asp-action="GetAllCategories">Kategori Yönetimi</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="Blog" asp-action="GetAllBlogs">Haber ve Blog Yönetimi</a>
+            </div>
         }
         else if (userIsCustomerService)
         {
@@ -76,10 +65,10 @@
                 <a id="manage" class="nav-link text-dark" asp-area="VisitorPanel" asp-controller="Panel" asp-action="Index">Visitor Panel</a>
             </li>
         }
+        <div class="list-group mt-3">
+            <a id="manage" class="list-group-item list-group-item-action" asp-controller="Account" asp-action="Logout">Çıkış</a>
+        </div>
 
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış</a>  
-        </li>
     }
     else
     {

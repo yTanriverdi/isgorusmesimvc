@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC.Areas.AdminPanel.Models.VMs;
 using MVC.Areas.AdminPanel.Models.VMs.Category;
 using MVC.Areas.AdminPanel.Models.VMs.Product;
+using MVC.Models;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Reflection;
 
 namespace MVC.Areas.ContentManagerPanel.Controllers
@@ -186,6 +189,71 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
                 return View(products);
             }
             return NotFound();
+        }
+
+        public async Task<IActionResult> UploadProductImage(int ProductId)
+        {
+            var response = await _httpClient.GetAsync($"{uri}/Product/FindProduct/{ProductId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var product = await response.Content.ReadAsStringAsync();
+                bool productExists = bool.Parse(product); // veya JsonConvert.DeserializeObject<bool>(content) kullanabilirsiniz
+
+                if (productExists)
+                {
+                    var vm = new UploadProductImageVM
+                    {
+                        ProductId = ProductId
+                    };
+                    return View(vm);
+                }
+            }
+            return NotFound();
+        }
+
+        //ürüne resim ekleme metodu
+        [HttpPost]
+        public async Task<IActionResult> UploadProductImage(UploadProductImageVM vm)
+        {
+            if (vm.File == null || vm.File.Length == 0)
+                return View("Error", new ErrorViewModel { RequestId = "No file uploaded." });
+
+            using (var content = new MultipartFormDataContent())
+            {
+                var fileContent = new StreamContent(vm.File.OpenReadStream());
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue(vm.File.ContentType);
+                content.Add(fileContent, "file", vm.File.FileName);
+
+                try
+                {
+                    var response = await _httpClient.PostAsync($"{uri}/product/UploadProductImage/{vm.ProductId}", content);
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
+                    var imageUrl = responseData.imageUrl.ToString();
+                    await Console.Out.WriteLineAsync(imageUrl);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        // Hata mesajını okuyun ve hata sayfasına gönderin
+                        var errorMessage = await response.Content.ReadAsStringAsync();
+                        return View("Error", new ErrorViewModel
+                        {
+                            RequestId = $"File upload failed. Server response: {errorMessage}"
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Hata oluşursa hata sayfasına yönlendirin
+                    return View("Error", new ErrorViewModel
+                    {
+                        RequestId = $"An error occurred: {ex.Message}"
+                    });
+                }
+            }
+
+            // Başarılı yüklemeden sonra detay sayfasına yönlendirin
+            return RedirectToAction("GetAllProducts", "Product", new { area = "AdminPanel" });
+
         }
 
 

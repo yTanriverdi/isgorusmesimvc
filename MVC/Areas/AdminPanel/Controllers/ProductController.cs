@@ -5,6 +5,9 @@ using Microsoft.CodeAnalysis;
 using MVC.Areas.AdminPanel.Models.VMs;
 using MVC.Areas.AdminPanel.Models.VMs.Category;
 using MVC.Areas.AdminPanel.Models.VMs.Product;
+using MVC.Models;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace MVC.Areas.AdminPanel.Controllers
 {
@@ -29,7 +32,7 @@ namespace MVC.Areas.AdminPanel.Controllers
             var response = await _httpClient.GetAsync($"{uri}/Product/GetAllProducts");
             if (response.IsSuccessStatusCode)
             {
-                var products = await response.Content.ReadFromJsonAsync<List<Product>>();
+                var products = await response.Content.ReadFromJsonAsync<List<ListProduct>>();
                 return View(products);
             }
             return NoContent();

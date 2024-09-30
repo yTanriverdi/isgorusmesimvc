@@ -63,8 +63,14 @@ namespace MVC.Areas.AdminPanel.Controllers
 
 
         [HttpGet]
-        public IActionResult UpdateAdmin(int userId)
+        public async Task<IActionResult> UpdateAdmin(int userId)
         {
+            var user = await _httpClient.GetAsync($"{uri}/User/GetUserDetail/{userId}");
+            if (user.IsSuccessStatusCode)
+            {
+                var userDetail = await user.Content.ReadFromJsonAsync<UpdateUserVM>();
+                return View(userDetail);
+            }
             return View();
         }
 
