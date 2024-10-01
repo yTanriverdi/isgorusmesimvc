@@ -33,13 +33,13 @@
             <div class="list-group">
                 <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profil Bilgilerimi Düzenle</a>
                 <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="User" asp-action="GetAllUserByRoles">Kullanıcı Yönetimi</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCart" asp-action="">Satışlar</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCart" asp-action="GetAllOfferCarts">Satışlar</a>
                 <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProducts">Ürün Yönetimi</a>
                 <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Category" asp-action="GetAllCategories">Kategori Yönetimi</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Refund" asp-action="">İade Talepleri</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="" asp-action="">İşlem Onayları</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Log" asp-action="">Log Raporları</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCart" asp-action="">İletişim Kontrolü</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Refund" asp-action="GetAllRefundRequest">İade Talepleri</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProductsForAdmin">İşlem Onayları</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Log" asp-action="GetAllLogs">Log Raporları</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="Index">İletişim Kontrolü</a>
                 <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Report" asp-action="Index">İstatiksel Raporlar</a>
             </div>
 
@@ -66,18 +66,16 @@
             </li>
         }
         <div class="list-group mt-3">
-            <a id="manage" class="list-group-item list-group-item-action" asp-controller="Account" asp-action="Logout">Çıkış</a>
+            <a id="manage" class="list-group-item list-group-item-action" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış</a>
         </div>
 
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-controller="Account" asp-action="Create">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-controller="Account" asp-action="Login">Login</a>
-        </li>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" id="register" asp-controller="Account" asp-action="Create">Register</a>
+            <a class="list-group-item list-group-item-action" id="login" asp-controller="Account" asp-action="Login">Login</a>
+        </div>
     }
 </ul>
 

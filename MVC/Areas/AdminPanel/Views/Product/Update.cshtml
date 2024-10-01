@@ -14,29 +14,33 @@
         <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UpdateProduct.ProductName" class="control-label"></label>
-                <input asp-for="UpdateProduct.ProductName" class="form-control" />
-                <span asp-validation-for="UpdateProduct.ProductName" class="text-danger"></span>
+                <input asp-for="UpdateProductDTO.ProductId" class="form-control" type="hidden" />
+                <span asp-validation-for="UpdateProductDTO.ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UpdateProduct.Description" class="control-label"></label>
-                <input asp-for="UpdateProduct.Description" class="form-control" />
-                <span asp-validation-for="UpdateProduct.Description" class="text-danger"></span>
+                <label asp-for="UpdateProductDTO.ProductName" class="control-label"></label>
+                <input asp-for="UpdateProductDTO.ProductName" class="form-control" />
+                <span asp-validation-for="UpdateProductDTO.ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UpdateProduct.Price" class="control-label"></label>
-                <input asp-for="UpdateProduct.Price" class="form-control" />
-                <span asp-validation-for="UpdateProduct.Price" class="text-danger"></span>
+                <label asp-for="UpdateProductDTO.Description" class="control-label"></label>
+                <input asp-for="UpdateProductDTO.Description" class="form-control" />
+                <span asp-validation-for="UpdateProductDTO.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UpdateProduct.MaterialId" class="control-label"></label>
-                <select asp-for="UpdateProduct.MaterialId" class="form-select" asp-items="@Model.Materials"></select>
-                <span asp-validation-for="UpdateProduct.MaterialId" class="text-danger"></span>
+                <label asp-for="UpdateProductDTO.Price" class="control-label"></label>
+                <input asp-for="UpdateProductDTO.Price" class="form-control" />
+                <span asp-validation-for="UpdateProductDTO.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UpdateProduct.CategoryId" class="control-label"></label>
-                <select asp-for="UpdateProduct.CategoryId" class="form-select" asp-items="@Model.Categories"></select>
-                <span asp-validation-for="UpdateProduct.CategoryId" class="text-danger"></span>
+                <label asp-for="UpdateProductDTO.MaterialId" class="control-label"></label>
+                <select asp-for="UpdateProductDTO.MaterialId" class="form-select" asp-items="@Model.Materials"></select>
+                <span asp-validation-for="UpdateProductDTO.MaterialId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateProductDTO.CategoryId" class="control-label"></label>
+                <select asp-for="UpdateProductDTO.CategoryId" class="form-select" asp-items="@Model.Categories"></select>
+                <span asp-validation-for="UpdateProductDTO.CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -50,5 +54,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

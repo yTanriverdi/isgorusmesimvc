@@ -25,7 +25,7 @@
 				@Html.DisplayNameFor(model => model.Likes)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Picture)
+				@Html.DisplayNameFor(model => model.ImageUrl)
 			</th>
 			<th></th>
 		</tr>
@@ -47,8 +47,15 @@
 					@Html.DisplayFor(modelItem => item.Likes)
 				</td>
 				<td>
-						<img src="@item.Picture" alt="Ürün Resmi" style="max-width:100px; max-height:100px;" />
-				
+					@if (item.ImageUrl is null)
+					{
+						<img src="" alt="Product Image" style="max-width:100px; max-height:100px;" />
+					}
+					else
+					{
+						<img src="~/images/@item.ImageUrl" alt="Product Image" style="max-width:100px; max-height:100px;" />
+					}
+
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.IsActive)
@@ -56,17 +63,12 @@
 				<td>
 					<a class="btn btn-warning" asp-action="Update" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Güncelle</a>
 					<a class="btn btn-success" asp-action="Details" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Detay Görüntüle</a>
-					@if(item.Picture is null)
+					@if (item.ImageUrl is null)
 					{
-						<a class="btn btn-success" asp-action="UploadProductImage" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Ürüne Resim ekle </a>
+						<a class="btn btn-success" asp-action="UpdateProductImage" asp-controller="Product" asp-area="AdminPanel" asp-route-productId="@item.ProductId">Ürüne Resim ekle </a>
 					}
-				
-					@if (item.IsActive)
-					{
-						<a class="btn btn-success" asp-action="ActiveProduct" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Aktif Et</a>
 
-					}
-					else
+					@if (item.IsActive)
 					{
 						<a class="btn btn-danger" asp-action="Delete" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Pasif Et</a>
 

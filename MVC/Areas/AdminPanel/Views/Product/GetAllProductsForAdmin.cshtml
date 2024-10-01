@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MVC.Areas.AdminPanel.Models.VMs.Product.ListProduct>
+
+@{
+    ViewData["Title"] = "GetAllProductsForAdmin";
+}
+
+<h1>GetAllProductsForAdmin</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Likes)
+                </td>
+                <td>
+                    @if (item.ImageUrl is null)
+                    {
+                        <img src="" alt="Product Image" style="max-width:100px; max-height:100px;" />
+                    }
+                    else
+                    {
+                        <img src="~/images/@item.ImageUrl" alt="Product Image" style="max-width:100px; max-height:100px;" />
+                    }
+
+                </td>
+                <td>
+                    @if (item.IsActive != true)
+                    {
+                        <h5>Onaylanmadı</h5>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-action="ActiveProduct" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@item.ProductId">Onayla</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

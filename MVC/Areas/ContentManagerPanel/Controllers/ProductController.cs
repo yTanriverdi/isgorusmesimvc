@@ -31,7 +31,7 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
             var response = await _httpClient.GetAsync($"{uri}/Product/GetAllProducts");
             if (response.IsSuccessStatusCode)
             {
-                var products = await response.Content.ReadFromJsonAsync<List<ListProduct>>();
+                var products = await response.Content.ReadFromJsonAsync<IEnumerable<ListProduct>>();
                 return View(products);
             }
             return NoContent();
@@ -41,8 +41,8 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         //ürün ekleme
         public async Task<IActionResult> Create()
         {
-			CreateProductVM Createvm = new CreateProductVM();
-			var response = await _httpClient.GetAsync($"{uri}/Category/GetAllCategories");
+            CreateProductVM Createvm = new CreateProductVM();
+            var response = await _httpClient.GetAsync($"{uri}/Category/GetAllCategories");
             if (response.IsSuccessStatusCode)
             {
                 var categories = await response.Content.ReadFromJsonAsync<List<Category>>();
@@ -60,54 +60,24 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductVM vm)
         {
-            var response = await _httpClient.GetAsync($"{uri}/Category/GetAllCategories");
-            if (response.IsSuccessStatusCode)
+            var response2 = await _httpClient.PostAsJsonAsync($"{uri}/Product/AddProduct", vm.AddProductDTO);
+            if (response2.IsSuccessStatusCode)
             {
-                var categories = await response.Content.ReadFromJsonAsync<List<Category>>();
-                foreach (var item in categories)
-                {
-                    if(vm.CreateProduct.CategoryId == item.CategoryId)
-                    {
-                        Category category= new Category();
-                        category.CategoryId=item.CategoryId;
-                        category.CategoryName=item.CategoryName;
-                    }
-                }
-                vm.Categories = categories.Select(x => new SelectListItem() { Text = x.CategoryName, Value = x.CategoryId.ToString() }).ToList();
+                return RedirectToAction("GetAllProducts");
             }
-            var response1 = await _httpClient.GetAsync($"{uri}/Product/GetAllMaterials");
-            if (response1.IsSuccessStatusCode)
-            {
-                var materials = await response1.Content.ReadFromJsonAsync<List<MaterialVM>>();
-                foreach (var item in materials)
-                {
-                    if (vm.CreateProduct.MaterialId == item.MaterialId)
-                    {
-                        MaterialVM materialVM = new MaterialVM();
-                        materialVM.MaterialId = item.MaterialId;
-                        materialVM.Name = item.Name;
-                    }
-                }
-                vm.Materials = materials.Select(x => new SelectListItem() { Text = x.Name, Value = x.MaterialId.ToString() }).ToList();
-            }
-           
-				var response2 = await _httpClient.PostAsJsonAsync($"{uri}/Product/AddProduct", vm.CreateProduct);
-				if (response2.IsSuccessStatusCode)
-				{
-					return RedirectToAction("GetAllProducts");
-				}
-                return View(vm);
-			
+            return View(vm);
+
         }
 
         UpdateProductVM Updatevm = new UpdateProductVM();
         //ürün güncelleme
         public async Task<IActionResult> Update(int ProductId)
         {
+
             var response = await _httpClient.GetAsync($"{uri}/Product/GetProductById/{ProductId}");
             if (response.IsSuccessStatusCode)
             {
-                Updatevm.UpdateProduct = await response.Content.ReadFromJsonAsync<UpdateProduct>();
+                Updatevm.UpdateProductDTO = await response.Content.ReadFromJsonAsync<UpdateProductDTO>();
             }
             var response1 = await _httpClient.GetAsync($"{uri}/Category/GetAllCategories");
             if (response1.IsSuccessStatusCode)
@@ -115,27 +85,29 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
                 var categories = await response1.Content.ReadFromJsonAsync<List<Category>>();
                 Updatevm.Categories = categories.Select(x => new SelectListItem() { Text = x.CategoryName, Value = x.CategoryId.ToString() }).ToList();
             }
-            var response2 = await _httpClient.GetAsync($"{uri}/Material/GetlAllMaterials/");
+            var response2 = await _httpClient.GetAsync($"{uri}/Product/GetAllMaterials");
             if (response2.IsSuccessStatusCode)
             {
                 var materials = await response2.Content.ReadFromJsonAsync<List<MaterialVM>>();
                 Updatevm.Materials = materials.Select(x => new SelectListItem() { Text = x.Name, Value = x.MaterialId.ToString() }).ToList();
             }
+
+            Updatevm.UpdateProductDTO.ProductId = ProductId;
             return View(Updatevm);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Update(int ProductId, UpdateProductVM vm)
+        public async Task<IActionResult> Update(UpdateProductVM vm)
         {
-            var response = await _httpClient.PutAsJsonAsync($"{uri}/UpdateProduct/{ProductId}", vm.UpdateProduct);
-            if (response.IsSuccessStatusCode)
+
+            var response3 = await _httpClient.PutAsJsonAsync($"{uri}/Product/UpdateProduct", vm.UpdateProductDTO);
+            if (response3.IsSuccessStatusCode)
             {
                 return RedirectToAction("GetAllProducts");
             }
             return View(vm);
         }
-
 
 
         //ürün pasif etme(silme)
@@ -166,7 +138,7 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         public async Task<IActionResult> Details(int ProductId)
         {
             var reponse = await _httpClient.GetAsync($"{uri}/Product/GetProductById/{ProductId}");
-            if(reponse.IsSuccessStatusCode)
+            if (reponse.IsSuccessStatusCode)
             {
                 var product = await reponse.Content.ReadFromJsonAsync<GetProductDetailsVM>();
                 return View(product);
@@ -177,33 +149,36 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
 
 
 
-
-
         //Arama motorundaki kelimeye göre kategroileri bulup getirme
         public async Task<IActionResult> SearchCategoryByKeyword(string keyword)
         {
             var response = await _httpClient.GetAsync($"{uri}/Product/{keyword}");
             if (response.IsSuccessStatusCode)
             {
-                var products = await response.Content.ReadFromJsonAsync<List<CreateProduct>>();
+                var products = await response.Content.ReadFromJsonAsync<List<AddProductDTO>>();
                 return View(products);
             }
             return NotFound();
         }
 
-        public async Task<IActionResult> UploadProductImage(int ProductId)
+
+        //***************************************************************
+
+
+        //yeni resim ekleme deneme metodu
+        public async Task<IActionResult> UpdateProductImage(int productId)
         {
-            var response = await _httpClient.GetAsync($"{uri}/Product/FindProduct/{ProductId}");
+            var response = await _httpClient.GetAsync($"{uri}/Product/FindProduct/{productId}");
             if (response.IsSuccessStatusCode)
             {
                 var product = await response.Content.ReadAsStringAsync();
-                bool productExists = bool.Parse(product); // veya JsonConvert.DeserializeObject<bool>(content) kullanabilirsiniz
+                bool productExists = bool.Parse(product);
 
                 if (productExists)
                 {
                     var vm = new UploadProductImageVM
                     {
-                        ProductId = ProductId
+                        ProductId = productId
                     };
                     return View(vm);
                 }
@@ -211,48 +186,24 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
             return NotFound();
         }
 
-        //ürüne resim ekleme metodu
         [HttpPost]
-        public async Task<IActionResult> UploadProductImage(UploadProductImageVM vm)
+        public async Task<IActionResult> UpdateProductImage(UploadProductImageVM vm)
         {
-            if (vm.File == null || vm.File.Length == 0)
-                return View("Error", new ErrorViewModel { RequestId = "No file uploaded." });
 
-            using (var content = new MultipartFormDataContent())
+            string path = "wwwroot/images/" + vm.File.FileName;
+            FileStream fs = new FileStream(path, FileMode.Create);
+            await vm.File.CopyToAsync(fs);
+            fs.Close();
+
+            UploadImage uploadImage = new UploadImage();
+            uploadImage.ProductId = vm.ProductId;
+            uploadImage.ImageUrl = vm.File.FileName;
+            var response = await _httpClient.PostAsJsonAsync($"{uri}/Product/UpdateProductImage", uploadImage);
+            if (response.IsSuccessStatusCode)
             {
-                var fileContent = new StreamContent(vm.File.OpenReadStream());
-                fileContent.Headers.ContentType = new MediaTypeHeaderValue(vm.File.ContentType);
-                content.Add(fileContent, "file", vm.File.FileName);
-
-                try
-                {
-                    var response = await _httpClient.PostAsync($"{uri}/product/UploadProductImage/{vm.ProductId}", content);
-                    var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var responseData = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
-                    var imageUrl = responseData.imageUrl.ToString();
-                    await Console.Out.WriteLineAsync(imageUrl);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        // Hata mesajını okuyun ve hata sayfasına gönderin
-                        var errorMessage = await response.Content.ReadAsStringAsync();
-                        return View("Error", new ErrorViewModel
-                        {
-                            RequestId = $"File upload failed. Server response: {errorMessage}"
-                        });
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Hata oluşursa hata sayfasına yönlendirin
-                    return View("Error", new ErrorViewModel
-                    {
-                        RequestId = $"An error occurred: {ex.Message}"
-                    });
-                }
+                return RedirectToAction("GetAllProducts");
             }
-
-            // Başarılı yüklemeden sonra detay sayfasına yönlendirin
-            return RedirectToAction("GetAllProducts", "Product", new { area = "AdminPanel" });
+            return View(vm);
 
         }
 

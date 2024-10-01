@@ -14,29 +14,29 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CreateProduct.ProductName" class="control-label"></label>
-                <input asp-for="CreateProduct.ProductName" class="form-control" />
-                <span asp-validation-for="CreateProduct.ProductName" class="text-danger"></span>
+                <label asp-for="AddProductDTO.ProductName" class="control-label"></label>
+                <input asp-for="AddProductDTO.ProductName" class="form-control" />
+                <span asp-validation-for="AddProductDTO.ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateProduct.Description" class="control-label"></label>
-                <input asp-for="CreateProduct.Description" class="form-control" />
-                <span asp-validation-for="CreateProduct.Description" class="text-danger"></span>
+                <label asp-for="AddProductDTO.Description" class="control-label"></label>
+                <input asp-for="AddProductDTO.Description" class="form-control" />
+                <span asp-validation-for="AddProductDTO.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateProduct.Price" class="control-label"></label>
-                <input asp-for="CreateProduct.Price" class="form-control" />
-                <span asp-validation-for="CreateProduct.Price" class="text-danger"></span>
+                <label asp-for="AddProductDTO.Price" class="control-label"></label>
+                <input asp-for="AddProductDTO.Price" class="form-control" />
+                <span asp-validation-for="AddProductDTO.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateProduct.MaterialId" class="control-label"></label>
-                <select class="form-select" asp-for="CreateProduct.MaterialId" asp-items="Model.Materials"></select>
-                <span asp-validation-for="CreateProduct.MaterialId" class="text-danger"></span>
+                <label asp-for="AddProductDTO.MaterialId" class="control-label"></label>
+                <select class="form-select" asp-for="AddProductDTO.MaterialId" asp-items="Model.Materials"></select>
+                <span asp-validation-for="AddProductDTO.MaterialId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateProduct.CategoryId" class="control-label"></label>
-                <select class="form-select" asp-for="CreateProduct.CategoryId" asp-items="Model.Categories"></select>
-                <span asp-validation-for="CreateProduct.CategoryId" class="text-danger"></span>
+                <label asp-for="AddProductDTO.CategoryId" class="control-label"></label>
+                <select class="form-select" asp-for="AddProductDTO.CategoryId" asp-items="Model.Categories"></select>
+                <span asp-validation-for="AddProductDTO.CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -46,9 +46,11 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="GetAllProducts" asp-controller="Product" asp-area="AdminPanel">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

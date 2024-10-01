@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Data\" />
+    <Folder Include="Areas\AdminPanel\Models\VMs\Log\" />
     <Folder Include="Areas\ContentManagerPanel\Data\" />
     <Folder Include="Areas\CustomerServicePanel\Controllers\" />
     <Folder Include="Areas\CustomerServicePanel\Data\" />

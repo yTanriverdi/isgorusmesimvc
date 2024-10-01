@@ -1,0 +1,26 @@
+﻿<div class="card mb-3">
+    <div class="card-header bg-primary text-white">Kullanıcıya Göre Siparişleri Göster</div>
+    <div class="card-body">
+        <form method="get" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="GetMessagesByOfferCartId">
+            <div class="form-group">
+                <label for="offerCartId">Sipariş ID:</label>
+                <input type="number" name="offerCartId" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Göster</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="card mb-3">
+    <div class="card-header bg-primary text-white">Kullanıcıya Göre Siparişleri Göster</div>
+    <div class="card-body">
+        <form method="get" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="GetMessagesByUserId">
+            <div class="form-group">
+                <label for="appUserId">User ID:</label>
+                <input type="number" name="appUserId" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Göster</button>
+        </form>
+    </div>
+</div>
