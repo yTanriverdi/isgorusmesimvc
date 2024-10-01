@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UpdateAdmin">
+        <form asp-action="UpdateAdmin" asp-controller="User" asp-area="CustomerServicePanel">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input asp-for="Id" class="form-control" type="hidden" />
@@ -44,9 +44,11 @@
 </div>
 
 <div>
-    <a asp-action="GetUserDetails" asp-controller="User" asp-area="AdminPanel">Back to List</a>
+    <a asp-action="GetUserDetails" asp-controller="User" asp-area="CustomerServicePanel">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

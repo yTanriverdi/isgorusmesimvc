@@ -78,7 +78,8 @@ namespace MVC.Areas.AdminPanel.Controllers
             var response = await _httpClient.GetAsync($"{uri}/Product/GetProductById/{ProductId}");
             if (response.IsSuccessStatusCode)
             {
-                Updatevm.UpdateProductDTO = await response.Content.ReadFromJsonAsync<UpdateProductDTO>();
+                var product= await response.Content.ReadFromJsonAsync<UpdateProductDTO>();
+                Updatevm.UpdateProductDTO = product;
             }
             var response1 = await _httpClient.GetAsync($"{uri}/Category/GetAllCategories");
             if (response1.IsSuccessStatusCode)

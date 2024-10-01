@@ -77,9 +77,9 @@ namespace MVC.Areas.AdminPanel.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UpdateAdmin(int userId, UpdateUserVM updateUserVM)
+        public async Task<IActionResult> UpdateAdmin( UpdateUserVM updateUserVM)
         {
-            var user = await _httpClient.PutAsJsonAsync($"{uri}/User/UpdateAdmin/{userId}", updateUserVM);
+            var user = await _httpClient.PutAsJsonAsync($"{uri}/User/UpdateUser/{updateUserVM.Id}", updateUserVM);
             if (user.IsSuccessStatusCode)
                 return RedirectToAction("GetAllUserByRoles");
             return View(updateUserVM);

@@ -55,9 +55,10 @@
         }
         else if (userIsCustomerService)
         {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="CustomerServicePanel" asp-controller="Panel" asp-action="Index">Customer Service Panel</a>
-            </li>
+            <div class="list-group">
+                <a id="manage" class="list-group-item list-group-item-action" asp-area="CustomerServicePanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profil Bilgilerimi Düzenle</a>
+                <a id="manage" class="list-group-item list-group-item-action" asp-route-Id="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value" asp-area="CustomerServicePanel" asp-controller="User" asp-action="GetUserDetails">Kullanıcı Bilgilerini Görüntüle</a>
+            </div>
         }
         else if (userIsVisitor)
         {
