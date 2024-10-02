@@ -1,84 +1,253 @@
 ﻿@using System.Security.Claims
 
 
-<ul class="navbar-nav">
-    @{
-        bool userIsAdmin = false;
-        bool userIsContentManager = false;
-        bool userIsCustomerService = false;
-        bool userIsVisitor = false;
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        @{
+            bool userIsAdmin = false;
+            bool userIsContentManager = false;
+            bool userIsCustomerService = false;
+            bool userIsVisitor = false;
 
-        if (User.IsInRole != null)
-        {
-            // string user= @Model.UserRoles.FirstOrDefault();
-            if (User.IsInRole("Admin"))
-                userIsAdmin = true;
-            else if (User.IsInRole("ContentManager"))
-                userIsContentManager = true;
-            else if (User.IsInRole("CustomerService"))
-                userIsCustomerService = true;
-            else if (User.IsInRole("Visitor"))
-                userIsVisitor = true;
+            if (User.IsInRole != null)
+            {
+                // string user= @Model.UserRoles.FirstOrDefault();
+                if (User.IsInRole("Admin"))
+                    userIsAdmin = true;
+                else if (User.IsInRole("ContentManager"))
+                    userIsContentManager = true;
+                else if (User.IsInRole("CustomerService"))
+                    userIsCustomerService = true;
+                else if (User.IsInRole("Visitor"))
+                    userIsVisitor = true;
+            }
         }
-    }
 
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div class="list-group mt-3">
-            <a id="manage" class="list-group-item list-group-item-action text-dark">Hello @User.Identity.Name</a>
-        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (userIsAdmin)
+            {
+                <!-- ======= Sidebar ======= -->
+                <li class="nav-item">
+                    <a class="nav-link " asp-area="AdminPanel" asp-controller="User" asp-action="Index">
+                        <i class="bi bi-grid"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
-        @if (userIsAdmin)
-        {
-            <div class="list-group">
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profil Bilgilerimi Düzenle</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="User" asp-action="GetAllUserByRoles">Kullanıcı Yönetimi</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCart" asp-action="GetAllOfferCarts">Satışlar</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProducts">Ürün Yönetimi</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Category" asp-action="GetAllCategories">Kategori Yönetimi</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Refund" asp-action="GetAllRefundRequest">İade Talepleri</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProductsForAdmin">İşlem Onayları</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Log" asp-action="GetAllLogs">Log Raporları</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="Index">İletişim Kontrolü</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="AdminPanel" asp-controller="Report" asp-action="Index">İstatiksel Raporlar</a>
-            </div>
+                <!-- End Dashboard Nav -->
 
-        }
-        else if (userIsContentManager)
-        {
-            <div class="list-group">
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profil Bilgilerimi Düzenle</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="Product" asp-action="GetAllProducts">Ürün Yönetimi</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="Category" asp-action="GetAllCategories">Kategori Yönetimi</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="ContentManagerPanel" asp-controller="Blog" asp-action="GetAllBlogs">Haber ve Blog Yönetimi</a>
-            </div>
-        }
-        else if (userIsCustomerService)
-        {
-            <div class="list-group">
-                <a id="manage" class="list-group-item list-group-item-action" asp-area="CustomerServicePanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">Profil Bilgilerimi Düzenle</a>
-                <a id="manage" class="list-group-item list-group-item-action" asp-route-Id="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value" asp-area="CustomerServicePanel" asp-controller="User" asp-action="GetUserDetails">Kullanıcı Bilgilerini Görüntüle</a>
-            </div>
-        }
-        else if (userIsVisitor)
-        {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
+                        <i class="bi bi-person"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+
+                <!-- End Profile Page Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="User" asp-action="GetAllUserByRoles">
+                        <i class="bi bi-person"></i>
+                        <span>Kullanıcı Yönetimi</span>
+                    </a>
+                </li>
+
+                <!-- End Kullanıcı Yönetimi Page Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-bar-chart"></i><span>Sales</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="AdminPanel" asp-controller="OfferCart" asp-action="GetAllOfferCarts">
+                                <i class="bi bi-circle"></i><span>Offer Carts</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- End Satışlar Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-gem"></i><span>Ürün Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProducts">
+                                <i class="bi bi-circle"></i><span>Products</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- End Ürün Yönetimi Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-menu-button-wide"></i><span>Kategori Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="AdminPanel" asp-controller="Category" asp-action="GetAllCategories">
+                                <i class="bi bi-circle"></i><span>Categories</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- End Kategori Yönetimi Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-journal-text"></i><span>İade Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="AdminPanel" asp-controller="Refund" asp-action="GetAllRefundRequest">
+                                <i class="bi bi-circle"></i><span>Refunds</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- End İade Yönetimi Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-check"></i><span>İşlem Onayları</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProductsForAdmin">
+                                <i class="bi bi-circle"></i><span>Ürün Onayı</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- End İşlem Onayları Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="Report" asp-action="Index">
+                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <span>İstatiksel Raporlar</span>
+                    </a>
+                </li>
+
+                <!-- End Rapor Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="Index">
+                        <i class="bi bi-envelope"></i>
+                        <span>İletişim Kontrolü</span>
+                    </a>
+                </li>
+
+                <!-- End İletişim Kontrolü Page Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="Log" asp-action="GetAllLogs">
+                        <i class="bi bi-dash-circle"></i>
+                        <span>Log Reports</span>
+                    </a>
+                </li>
+
+                <!-- End Error 404 Page Nav -->
+            }
+            else if (userIsContentManager)
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="ContentManagerPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
+                        <i class="bi bi-person"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-gem"></i><span>Ürün Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="ContentManagerPanel" asp-controller="Product" asp-action="GetAllProducts">
+                                <i class="bi bi-circle"></i><span>Products</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-menu-button-wide"></i><span>Kategori Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="ContentManagerPanel" asp-controller="Category" asp-action="GetAllCategories">
+                                <i class="bi bi-circle"></i><span>Categories</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-menu-button-wide"></i><span>Haber ve Blog Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a asp-area="ContentManagerPanel" asp-controller="Blog" asp-action="GetAllBlogs">
+                                <i class="bi bi-circle"></i><span>News</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            }
+            else if (userIsCustomerService)
+            {
+                <li class="nav-item">
+                    <a id="manage" class="nav-link text-dark" asp-area="CustomerServicePanel" asp-controller="Panel" asp-action="Index">Customer Service Panel</a>
+                </li>
+            }
+            else if (userIsVisitor)
+            {
+                <li class="nav-item">
+                    <a id="manage" class="nav-link text-dark" asp-area="VisitorPanel" asp-controller="Panel" asp-action="Index">Visitor Panel</a>
+                </li>
+            }
+
             <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="VisitorPanel" asp-controller="Panel" asp-action="Index">Visitor Panel</a>
+                <a class="nav-link collapsed" asp-area="" asp-action="Logout" asp-controller="Account">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Sign Out</span>
+                </a>
             </li>
         }
-        <div class="list-group mt-3">
-            <a id="manage" class="list-group-item list-group-item-action" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış</a>
-        </div>
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" id="register" asp-controller="Account" asp-action="Create">
+                    <i class="bi bi-card-list"></i>
+                    <span>Register</span>
+                </a>
+            </li>
 
-    }
-    else
-    {
-        <div class="list-group">
-            <a class="list-group-item list-group-item-action" id="register" asp-controller="Account" asp-action="Create">Register</a>
-            <a class="list-group-item list-group-item-action" id="login" asp-controller="Account" asp-action="Login">Login</a>
-        </div>
-    }
-</ul>
+            <!-- End Register Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" id="login" asp-controller="Account" asp-action="Login">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span>Login</span>
+                </a>
+            </li>
+
+            <!-- End Login Page Nav -->
+        }
+    </ul>
+</aside>
 
 
 
