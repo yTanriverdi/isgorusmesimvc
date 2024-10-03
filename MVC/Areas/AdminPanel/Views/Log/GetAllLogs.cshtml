@@ -4,7 +4,7 @@
     ViewData["Title"] = "GetAllLogs";
 }
 
-<h1>Tüm Loglar</h1>
+@* <h1>All Logs</h1>
 
 <table class="table">
     <thead>
@@ -13,24 +13,23 @@
                 Log ID
             </th>
             <th>
-                Oluşturulma Zamanı
+                Created Time
             </th>
             <th>
-                Seviye
+                Level
             </th>
             <th>
-                Mesaj
+                Message
             </th>
             <th>
-                Kaynak
+                Source
             </th>
             <th>
-                Kullanıcı ID
+                User ID
             </th>
             <th>
-                Hata Detay
+                Error Detail
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -64,4 +63,129 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@
+
+@* <h1 class="mb-4 text-center">All Logs</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-lg h-100 @(item.Level == "Error" ? "border-danger" : item.Level == "Warning" ? "border-warning" : "border-light")">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span class="badge @(item.Level == "Error" ? "bg-danger" : item.Level == "Warning" ? "bg-warning text-black" : "bg-light")">
+                                <i class="@(item.Level == "Error" ? "fas fa-exclamation-circle" : item.Level == "Warning" ? "fas fa-exclamation-triangle" : "fas fa-info-circle")"></i>
+                                @item.Level
+                            </span>
+                        </h5>
+                        <p class="card-text">
+                            <strong>Message:</strong> @item.Message
+                        </p>
+                        <p class="card-text">
+                            <strong>Source:</strong> @item.Source
+                        </p>
+                        <p class="card-text">
+                            <strong>User ID:</strong> @item.UserId
+                        </p>
+                        <p class="card-text small text-muted">
+                            <strong>Created Time:</strong> @item.Time
+                        </p>
+                        @if (!string.IsNullOrEmpty(item.ExceptionDetails))
+                        {
+                            <p class="card-text small text-danger">
+                                <strong>Error Details:</strong> @item.ExceptionDetails
+                            </p>
+                        }
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <span class="small text-muted">Log ID: @item.Id</span>
+                        <a class="btn btn-danger btn-sm" asp-action="DeleteLog" asp-route-logId="@item.Id">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div> *@
+
+                        <h1 class="mb-4 text-center">All Logs</h1>
+
+<!-- Filtreleme Butonları -->
+<div class="text-center mb-4">
+    <button class="btn btn-outline-danger filter-btn" data-filter="Error">Show Errors</button>
+    <button class="btn btn-outline-info filter-btn" data-filter="Information">Show Information</button>
+    <button class="btn btn-outline-secondary filter-btn" data-filter="All">Show All</button>
+</div>
+
+<div class="container">
+    <div class="row" id="logContainer">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-12 col-lg-12 mb-4 log-item" data-level="@item.Level">
+                <div class="card shadow-lg h-100 @(item.Level == "Error" ? "border-danger" : item.Level == "Warning" ? "border-warning" : "border-success")">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span class="badge @(item.Level == "Error" ? "bg-danger" : item.Level == "Warning" ? "bg-warning text-dark" : "bg-success")">
+                                <i class="@(item.Level == "Error" ? "fas fa-exclamation-circle" : item.Level == "Warning" ? "fas fa-exclamation-triangle" : "fas fa-info-circle")"></i> 
+                                @item.Level
+                            </span>
+                        </h5>
+                        <p class="card-text">
+                            <strong>Message:</strong> @item.Message
+                        </p>
+                        <p class="card-text">
+                            <strong>Source:</strong> @item.Source
+                        </p>
+                        <p class="card-text">
+                            <strong>User ID:</strong> @item.UserId
+                        </p>
+                        <p class="card-text small text-muted">
+                            <strong>Created Time:</strong> @item.Time
+                        </p>
+                        @if (!string.IsNullOrEmpty(item.ExceptionDetails))
+                        {
+                            <p class="card-text small text-danger">
+                                <strong>Error Details:</strong> @item.ExceptionDetails
+                            </p>
+                        }
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <span class="small text-muted">Log ID: @item.Id</span>
+                        <a class="btn btn-danger btn-sm" asp-action="DeleteLog" asp-route-logId="@item.Id">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- JavaScript Kodları -->
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const filterButtons = document.querySelectorAll(".filter-btn");
+            const logItems = document.querySelectorAll(".log-item");
+
+            filterButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const filter = this.getAttribute("data-filter");
+
+                    logItems.forEach(item => {
+                        if (filter === "All") {
+                            item.style.display = "block";
+                        } else if (item.getAttribute("data-level") === filter) {
+                            item.style.display = "block";
+                        } else {
+                            item.style.display = "none";
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

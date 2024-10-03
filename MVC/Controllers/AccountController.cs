@@ -67,7 +67,7 @@ namespace MVC.Controllers
 
                         //rolü neyse o areaya yönlendiriyor
                         if (userLoginResult.UserRoles.Contains("Admin"))
-                            return RedirectToAction("Create", "Product", new { area = "AdminPanel" });
+                            return RedirectToAction("Index", "User", new { area = "AdminPanel" });
                         //return RedirectToAction("Index", "Home");
                         else if (userLoginResult.UserRoles.Contains("ContentManager"))
                             return RedirectToAction("GetAllProducts", "Product", new { area = "ContentManagerPanel" });

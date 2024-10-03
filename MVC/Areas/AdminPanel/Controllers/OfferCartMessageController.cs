@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Areas.AdminPanel.Models.DTOs.OfferCartMessage;
+using MVC.Areas.AdminPanel.Models.VMs.User;
 
 namespace MVC.Areas.AdminPanel.Controllers
 {
@@ -31,6 +32,7 @@ namespace MVC.Areas.AdminPanel.Controllers
                 var offerCartMessageDtos = await response.Content.ReadFromJsonAsync<List<OfferCartMessageDTO>>();
                 return View(offerCartMessageDtos);
             }
+            
             return NoContent();
         }
 

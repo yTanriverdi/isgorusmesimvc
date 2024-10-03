@@ -1,26 +1,26 @@
-﻿<div class="card mb-3">
-    <div class="card-header bg-primary text-white">Kullanıcıya Göre Siparişleri Göster</div>
+﻿<div class="card mb-3 col-6 justify-content-center">
+    <div class="card-header bg-light text-black">Get Messages By Offer Cart ID</div>
     <div class="card-body">
         <form method="get" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="GetMessagesByOfferCartId">
             <div class="form-group">
-                <label for="offerCartId">Sipariş ID:</label>
+                <label for="offerCartId">Offer Cart ID:</label>
                 <input type="number" name="offerCartId" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-primary w-100">Göster</button>
+            <button type="submit" class="btn btn-light w-100 mt-3">Show</button>
         </form>
     </div>
 </div>
 
 
-<div class="card mb-3">
-    <div class="card-header bg-primary text-white">Kullanıcıya Göre Siparişleri Göster</div>
+<div class="card mb-3 col-6 justify-content-center">
+    <div class="card-header bg-light text-black">Get Messages By Customer ID</div>
     <div class="card-body">
         <form method="get" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="GetMessagesByUserId">
             <div class="form-group">
-                <label for="appUserId">User ID:</label>
+                <label for="appUserId">Customer ID:</label>
                 <input type="number" name="appUserId" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-primary w-100">Göster</button>
+            <button type="submit" class="btn btn-light w-100 mt-3">Show</button>
         </form>
     </div>
 </div>

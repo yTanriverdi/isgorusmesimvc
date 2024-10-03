@@ -29,7 +29,7 @@
     <!-- Template Main CSS File -->
     <link href="~/lib/NiceAdmin/assets/css/style.css" rel="stylesheet">
 </head>
-<body>
+<body onload="fetchSalesData('today')">
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
@@ -201,13 +201,21 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" asp-area="AdminPanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value" data-bs-toggle="dropdown">
                         <img src="~/lib/NiceAdmin/assets/img/profile-img.jpg" alt="" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@User.Identity.Name</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
                             <h6>@User.Identity.Name</h6>
-                            <span>Web Designer</span>
+                            <span>
+                                @{
+                                    var roles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+                                }
+                                @foreach (var role in roles)
+                                {
+                                    @role
+                                }
+                            </span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -252,7 +260,6 @@
 
                     </ul><!-- End Profile Dropdown Items -->
                 </li><!-- End Profile Nav -->
-
             </ul>
         </nav><!-- End Icons Navigation -->
 
@@ -289,6 +296,120 @@
 
     <!-- Template Main JS File -->
     <script src="~/lib/NiceAdmin/assets/js/main.js"></script>
+    <script>
+        function fetchSalesData(timeFrame) {
+            const today = new Date();
+            let startDate, endDate;
+
+            // Tarihleri hesapla
+            if (timeFrame === 'today') {
+                startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+                $("#time-frame").text("| Today");
+            } else if (timeFrame === 'month') {
+                startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                $("#time-frame").text("| This Month");
+            } else if (timeFrame === 'year') {
+                startDate = new Date(today.getFullYear(), 0, 1);
+                endDate = new Date(today.getFullYear() + 1, 0, 0);
+                $("#time-frame").text("| This Year");
+            }
+
+            // Tarih formatlarını hazırla
+            const startDateString = startDate.toLocaleDateString('en-CA'); // YYYY-MM-DD formatı
+            const endDateString = endDate.toLocaleDateString('en-CA'); // YYYY-MM-DD formatı
+
+            // API çağrısı
+            $.ajax({
+                url: `http://localhost:5211/api/Report/GetOfferCartSummaryReport`,
+                method: 'GET',
+                data: {
+                    startDate: startDateString,
+                    endDate: endDateString
+                },
+                success: function (data) {
+
+                    // Toplam amount ve satış sayısını hesapla
+                    const totalAmount = data.reduce((total, offerCart) => total + offerCart.amount, 0); // amount'ları topla
+                    const totalPriceP = data.reduce((totalP, offerCart) => totalP + offerCart.totalPrice, 0); // totalPrica'ları topla
+                    const salesCount = data.length; // Satış sayısını al
+
+                    $("#sales-count").text(totalAmount); // Toplam amount'ı göster
+                    $("#revenue-amount").text(totalPriceP); // Toplam totalPrice'ı göster
+                    $("#person-count").text(salesCount); // Toplam Sipariş oluşturan müşteri sayısını göster
+
+                    // Önceki dönemin satış sayısını al ve yüzdeyi hesapla
+                    // getPreviousSalesCount(timeFrame).then(previousSalesCount => {
+                    //     const percentageIncrease = calculatePercentageIncrease(previousSalesCount, salesCount);
+                    //     $("#percentage-increase").text(percentageIncrease + '%');
+                    // });
+                },
+                error: function (xhr, status, error) {
+                    console.error("API error:", error);
+                }
+            });
+        }
+
+        // Geçmiş verileri almak için bir fonksiyon
+        async function getPreviousSalesCount(timeFrame) {
+            const today = new Date();
+            let previousStartDate, previousEndDate;
+
+            if (timeFrame === 'today') {
+                // Bir gün öncesinin başlangıç ve bitiş tarihleri (sadece gün)
+                previousStartDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()) // Geçen ayın ilk günü
+                previousEndDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1) // Geçen ayın son günü
+            } else if (timeFrame === 'month') {
+                previousStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1); // Geçen ayın ilk günü
+                previousEndDate = new Date(today.getFullYear(), today.getMonth(), 0); // Geçen ayın son günü
+            } else if (timeFrame === 'year') {
+                previousStartDate = new Date(today.getFullYear() - 1, 0, 1); // Geçen yılın ilk günü
+                previousEndDate = new Date(today.getFullYear(), 0, 0); // Geçen yılın son günü
+            }
+
+            // Tarihleri UTC formatında MM-DD-YYYY olarak ayarlama
+            const previousStartDateString = formatDateToMMDDYYYYUTC(previousStartDate);
+            const previousEndDateString = formatDateToMMDDYYYYUTC(previousEndDate);
+
+
+            return $.ajax({
+                url: `http://localhost:5211/api/Report/GetOfferCartSummaryReport`,
+                method: 'GET',
+                data: {
+                    startDate: previousStartDateString,
+                    endDate: previousEndDateString
+                },
+                success: function (data) {
+                    // Önceki dönemden gelen amount'ları topla
+                    const previousTotalAmount = data.reduce((total, offerCart) => total + offerCart.amount, 0);
+                    return previousTotalAmount; // API'den gelen önceki total amount
+                },
+                error: function (xhr, status, error) {
+                    console.error("API error:", error);
+                    return 0; // Hata durumunda 0 dön
+                }
+            });
+        }
+
+        // Tarih formatlarını hazırlamak için fonksiyon
+        function formatDateToMMDDYYYYUTC(date) {
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Ay (01-12)
+            const day = String(date.getUTCDate()).padStart(2, '0');         // Gün (01-31)
+            const year = date.getUTCFullYear();                             // Yıl (YYYY)
+            return `${month}-${day}-${year}`;                              // MM-DD-YYYY formatı
+        }
+
+        // Yüzde artışı hesaplamak için bir fonksiyon
+        // function calculatePercentageIncrease(previous, current) {
+        //     if (previous === 0) {
+        //         return current > 0 ? 100 : 0; // İlk defa satış varsa %100 artış
+        //     }
+        //     return Math.round(((current - previous) / previous) * 100);
+        // }
+
+        // Satış verilerini API'den çekip tabloyu dolduran fonksiyon
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

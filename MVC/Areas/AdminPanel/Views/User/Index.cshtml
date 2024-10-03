@@ -69,33 +69,18 @@
 
                     <div class="card info-card customers-card">
 
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-
                         <div class="card-body">
-                            <h5 class="card-title">Customers <span>| This Year</span></h5>
+                            <h5 class="card-title">Customers</h5>
 
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="bi bi-people"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <h6>1244</h6>
-                                    <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                                    <h6 id="person-count">0</h6>
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -103,96 +88,31 @@
                 <!-- Recent Sales -->
                 <div class="col-12">
                     <div class="card recent-sales overflow-auto">
-
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-
                         <div class="card-body">
-                            <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                            <table class="table table-borderless datatable">
+                            <h5 class="card-title">Recent Sales</h5>
+                            <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">ProductId</th>
                                         <th scope="col">Customer</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2457</a></th>
-                                        <td>Brandon Jacob</td>
-                                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                        <td>$64</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2147</a></th>
-                                        <td>Bridie Kessler</td>
-                                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                                        <td>$47</td>
-                                        <td><span class="badge bg-warning">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2049</a></th>
-                                        <td>Ashleigh Langosh</td>
-                                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                                        <td>$147</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Angus Grady</td>
-                                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                                        <td>$67</td>
-                                        <td><span class="badge bg-danger">Rejected</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Raheem Lehner</td>
-                                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                                        <td>$165</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
+                                <tbody id="sales-data-body">
+                                    <!-- Dinamik olarak doldurulacak -->
                                 </tbody>
                             </table>
-
                         </div>
-
                     </div>
-                </div><!-- End Recent Sales -->
+                </div>
+                <!-- End Recent Sales -->
                 <!-- Top Selling -->
                 <div class="col-12">
-                    <div class="card top-selling overflow-auto">
-
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Top Selling <span>| Today</span></h5>
-
+                    <div class="card recent-sales overflow-auto">
+                        <div class="card-body">
+                            <h5 class="card-title">Top Selling</h5>
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
@@ -203,49 +123,14 @@
                                         <th scope="col">Revenue</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                                        <td>$64</td>
-                                        <td class="fw-bold">124</td>
-                                        <td>$5,828</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Exercitationem similique doloremque</a></td>
-                                        <td>$46</td>
-                                        <td class="fw-bold">98</td>
-                                        <td>$4,508</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Doloribus nisi exercitationem</a></td>
-                                        <td>$59</td>
-                                        <td class="fw-bold">74</td>
-                                        <td>$4,366</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum error</a></td>
-                                        <td>$32</td>
-                                        <td class="fw-bold">63</td>
-                                        <td>$2,016</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                                        <td>$79</td>
-                                        <td class="fw-bold">41</td>
-                                        <td>$3,239</td>
-                                    </tr>
+                                <tbody id="topsales-data-body">
+                                    <!-- Dinamik olarak doldurulacak -->
                                 </tbody>
                             </table>
-
                         </div>
-
                     </div>
-                </div><!-- End Top Selling -->
+                </div>
+                <!-- End Top Selling -->
 
             </div>
         </div><!-- End Left side columns -->
@@ -254,21 +139,9 @@
 
             <!-- Recent Activity -->
             <div class="card">
-                <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                            <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">Today</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                </div>
-
+                
                 <div class="card-body">
-                    <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+                    <h5 class="card-title">Recent Activity</h5>
 
                     <div class="activity">
 
@@ -326,53 +199,11 @@
             </div><!-- End Recent Activity -->
             <!-- News & Updates Traffic -->
             <div class="card">
-                <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                            <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">Today</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                </div>
-
                 <div class="card-body pb-0">
-                    <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+                    <h5 class="card-title">News &amp; Updates</h5>
 
                     <div class="news">
-                        <div class="post-item clearfix">
-                            <img src="~/lib/NiceAdmin/assets/img/news-1.jpg" alt="">
-                            <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                            <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
-                        </div>
-
-                        <div class="post-item clearfix">
-                            <img src="~/lib/NiceAdmin/assets/img/news-2.jpg" alt="">
-                            <h4><a href="#">Quidem autem et impedit</a></h4>
-                            <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
-                        </div>
-
-                        <div class="post-item clearfix">
-                            <img src="~/lib/NiceAdmin/assets/img/news-3.jpg" alt="">
-                            <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
-                            <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
-                        </div>
-
-                        <div class="post-item clearfix">
-                            <img src="~/lib/NiceAdmin/assets/img/news-4.jpg" alt="">
-                            <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                            <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
-                        </div>
-
-                        <div class="post-item clearfix">
-                            <img src="~/lib/NiceAdmin/assets/img/news-5.jpg" alt="">
-                            <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
-                            <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
-                        </div>
-
+                        <!-- Blog verileri buraya eklenecek -->
                     </div><!-- End sidebar recent posts-->
 
                 </div>
@@ -383,121 +214,158 @@
     </div>
 </section>
 
-<!-- jQuery ve AJAX -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section Scripts {
+    <script>
+        const loadSalesData = async () => {
+            try {
+                const res = await fetch('http://localhost:5211/api/Report/GetProductOfferStatusReport');
+                if (!res.ok) {
+                    throw new Error('Veri çekme işlemi başarısız oldu');
+                }
 
+                const data = await res.json();
+                console.log("Gelen Veri", data);
 
-<script>
-    function fetchSalesData(timeFrame) {
-        const today = new Date();
-        let startDate, endDate;
+                const salesDataBody = document.getElementById('sales-data-body');
+                
+                data.forEach(sale => {
+                    const row = document.createElement('tr');
 
-        // Tarihleri hesapla
-        if (timeFrame === 'today') {
-            startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-            endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-            $("#time-frame").text("| Today");
-        } else if (timeFrame === 'month') {
-            startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-            endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-            $("#time-frame").text("| This Month");
-        } else if (timeFrame === 'year') {
-            startDate = new Date(today.getFullYear(), 0, 1);
-            endDate = new Date(today.getFullYear() + 1, 0, 0);
-            $("#time-frame").text("| This Year");
-        }
+                    // Tablo hücrelerini oluştur ve doldur
+                    const td1 = document.createElement('td');
+                    td1.innerText = `${sale.productId}`;
+                    const td2 = document.createElement('td');
+                    td2.innerText = `${sale.firstName} ${sale.lastName}`;
+                    const td3 = document.createElement('td');
+                    td3.innerText = `${sale.productName}`;
+                    const td4 = document.createElement('td');
+                    td4.innerText = `${sale.price}`;
+                    const td5 = document.createElement('td');
+                    td5.innerText = `${sale.offerStatus}`;
 
-        // Tarih formatlarını hazırla
-        const startDateString = startDate.toLocaleDateString('en-CA'); // YYYY-MM-DD formatı
-        const endDateString = endDate.toLocaleDateString('en-CA'); // YYYY-MM-DD formatı
+                    console.log("TD1", td1);
 
-        // API çağrısı
-        $.ajax({
-            url: `http://localhost:5211/api/Report/GetOfferCartSummaryReport`,
-            method: 'GET',
-            data: {
-                startDate: startDateString,
-                endDate: endDateString
-            },
-            success: function (data) {
-                console.log(data); // Gelen veriyi kontrol et
-
-                // Toplam amount ve satış sayısını hesapla
-                const totalAmount = data.reduce((total, offerCart) => total + offerCart.amount, 0); // amount'ları topla
-                const totalPriceP = data.reduce((totalP, offerCart) => totalP + offerCart.totalPrice, 0); // totalPrica'ları topla
-                const salesCount = data.length; // Satış sayısını al
-
-                $("#sales-count").text(totalAmount); // Toplam amount'ı göster
-                $("#revenue-amount").text(totalPriceP); // Toplam totalPrice'ı göster
-
-                // Önceki dönemin satış sayısını al ve yüzdeyi hesapla
-                getPreviousSalesCount(timeFrame).then(previousSalesCount => {
-                    const percentageIncrease = calculatePercentageIncrease(previousSalesCount, salesCount);
-                    $("#percentage-increase").text(percentageIncrease + '%');
+                    row.append(td1);
+                    row.append(td2);
+                    row.append(td3);
+                    row.append(td4);
+                    row.append(td5);
+                    salesDataBody.append(row);
                 });
-            },
-            error: function (xhr, status, error) {
-                console.error("API error:", error);
+            } catch (err) {
+                console.error('Satış verilerini çekerken hata oluştu:', err);
+                alert('Satış verilerini yüklerken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
             }
-        });
-    }
+        };
 
-    // Geçmiş verileri almak için bir fonksiyon
-    async function getPreviousSalesCount(timeFrame) {
-        const today = new Date();
-        let previousStartDate, previousEndDate;
+        window.addEventListener("load", () => { loadSalesData(); });
+    </script>
 
-        if (timeFrame === 'today') {
-            // Bir gün öncesinin başlangıç ve bitiş tarihleri (sadece gün)
-            previousStartDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()) // Geçen ayın ilk günü
-            previousEndDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1) // Geçen ayın son günü
-        } else if (timeFrame === 'month') {
-            previousStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1); // Geçen ayın ilk günü
-            previousEndDate = new Date(today.getFullYear(), today.getMonth(), 0); // Geçen ayın son günü
-        } else if (timeFrame === 'year') {
-            previousStartDate = new Date(today.getFullYear() - 1, 0, 1); // Geçen yılın ilk günü
-            previousEndDate = new Date(today.getFullYear(), 0, 0); // Geçen yılın son günü
-        }
+    <script>
+        const topLoadSalesData = async () => {
+            try {
+                const res = await fetch('http://localhost:5211/api/Report/GetProductTopSelling');
+                if (!res.ok) {
+                    throw new Error('Veri çekme işlemi başarısız oldu');
+                }
 
-        // Tarihleri UTC formatında MM-DD-YYYY olarak ayarlama
-        const previousStartDateString = formatDateToMMDDYYYYUTC(previousStartDate);
-        const previousEndDateString = formatDateToMMDDYYYYUTC(previousEndDate);
+                const data = await res.json();
+                console.log("Gelen Veri", data);
 
-        console.log("Previous Start Date:", previousStartDateString); // Kontrol için
-        console.log("Previous End Date:", previousEndDateString);     // Kontrol için
+                const topSalesDataBody = document.getElementById('topsales-data-body');
 
-        return $.ajax({
-            url: `http://localhost:5211/api/Report/GetOfferCartSummaryReport`,
-            method: 'GET',
-            data: {
-                startDate: previousStartDateString,
-                endDate: previousEndDateString
-            },
-            success: function (data) {
-                // Önceki dönemden gelen amount'ları topla
-                const previousTotalAmount = data.reduce((total, offerCart) => total + offerCart.amount, 0);
-                return previousTotalAmount; // API'den gelen önceki total amount
-            },
-            error: function (xhr, status, error) {
-                console.error("API error:", error);
-                return 0; // Hata durumunda 0 dön
+                data.forEach(topSale => {
+                    const row = document.createElement('tr');
+
+                    // Tablo hücrelerini oluştur ve doldur
+                    const td1 = document.createElement('td');
+                    td1.innerText = `${topSale.views}`;
+                    const td2 = document.createElement('td');
+                    td2.innerText = `${topSale.productName}`;
+                    const td3 = document.createElement('td');
+                    td3.innerText = `${topSale.price}`;
+                    const td4 = document.createElement('td');
+                    td4.innerText = `${topSale.amount}`;
+                    const td5 = document.createElement('td');
+                    td5.innerText = `${topSale.totalPrice}`;
+
+                    row.append(td1);
+                    row.append(td2);
+                    row.append(td3);
+                    row.append(td4);
+                    row.append(td5);
+                    topSalesDataBody.append(row);
+                });
+            } catch (err) {
+                console.error('Satış verilerini çekerken hata oluştu:', err);
+                alert('Satış verilerini yüklerken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
             }
-        });
-    }
+        };
 
-    // Tarih formatlarını hazırlamak için fonksiyon
-    function formatDateToMMDDYYYYUTC(date) {
-        const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Ay (01-12)
-        const day = String(date.getUTCDate()).padStart(2, '0');         // Gün (01-31)
-        const year = date.getUTCFullYear();                             // Yıl (YYYY)
-        return `${month}-${day}-${year}`;                              // MM-DD-YYYY formatı
-    }
+        window.addEventListener("load", () => { topLoadSalesData(); });
+    </script>
 
-    // Yüzde artışı hesaplamak için bir fonksiyon
-    // function calculatePercentageIncrease(previous, current) {
-    //     if (previous === 0) {
-    //         return current > 0 ? 100 : 0; // İlk defa satış varsa %100 artış
-    //     }
-    //     return Math.round(((current - previous) / previous) * 100);
-    // }
-</script>
+    <script>
+        const LoadBlogsData = async () => {
+            try {
+                const res = await fetch('http://localhost:5211/api/Blog/GetAllBlogs');
+                if (!res.ok) {
+                    throw new Error('Veri çekme işlemi başarısız oldu');
+                }
+
+                const data = await res.json();
+                console.log("Gelen Veri", data);
+
+                const newsContainer = document.querySelector('.news');
+                newsContainer.innerHTML = ''; // Öncelikle mevcut içerikleri temizle
+
+                data.forEach(blog => {
+                    // Post item divini oluştur
+                    const postItem = document.createElement('div');
+                    postItem.className = 'post-item clearfix';
+
+                    // Görseli oluştur
+                    const img = document.createElement('img');
+                    img.src = blog.image; // Blog'dan gelen resim URL'si
+                    img.alt = blog.title; // Alternatif metin olarak başlık
+                    postItem.appendChild(img);
+
+                    // Başlık kısmını oluştur
+                    const title = document.createElement('h4');
+                    const titleLink = document.createElement('a');
+                    titleLink.href = '#'; // Burada başlık için bir link verirseniz
+                    titleLink.innerText = blog.title; // Başlık
+                    title.appendChild(titleLink);
+                    postItem.appendChild(title);
+
+                    // İçerik kısmını oluştur
+                    const content = document.createElement('p');
+                    content.innerText = blog.content; // İçerik
+                    postItem.appendChild(content);
+
+                    // Oluşturulan post item'ı haber konteynerine ekle
+                    newsContainer.appendChild(postItem);
+                });
+            } catch (err) {
+                console.error('Blog verilerini çekerken hata oluştu:', err);
+                alert('Blog verilerini yüklerken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+            }
+        };
+
+        window.addEventListener("load", () => { LoadBlogsData(); });
+    </script>
+
+    <!-- jQuery ve AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+}
+
+
+
+
+
+
+
+
+
+
+

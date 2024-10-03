@@ -90,7 +90,7 @@ namespace MVC.Areas.AdminPanel.Controllers
 
         public async Task<IActionResult> GetMoldProductionReport()
         {
-            var response = await _httpClient.GetAsync($"{uri}/GetRejectedOffersReport");
+            var response = await _httpClient.GetAsync($"{uri}/GetMoldProductionReport");
             if (response.IsSuccessStatusCode)
             {
                 var offerCarts = await response.Content.ReadFromJsonAsync<List<GetMoldProductionReportVM>>();

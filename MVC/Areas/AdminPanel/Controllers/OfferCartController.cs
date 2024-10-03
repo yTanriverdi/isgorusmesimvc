@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Areas.AdminPanel.Models.DTOs.OfferCart;
 using MVC.Areas.AdminPanel.Models.VMs.OfferCart;
 using MVC.Areas.AdminPanel.Models.VMs.Product;
 
@@ -27,6 +28,18 @@ namespace MVC.Areas.AdminPanel.Controllers
                 return View(offerCarts);
             }
             return NoContent();
+        }
+
+        //sipariş detayını gösterme
+        public async Task<IActionResult> Details(int offerCartId)
+        {
+            var reponse = await _httpClient.GetAsync($"{uri}/GetOfferCartById/{offerCartId}");
+            if (reponse.IsSuccessStatusCode)
+            {
+                var offerCart = await reponse.Content.ReadFromJsonAsync<OfferCartDTO>();
+                return View(offerCart);
+            }
+            return NotFound();
         }
     }
 }

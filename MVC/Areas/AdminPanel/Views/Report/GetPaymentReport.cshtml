@@ -4,50 +4,47 @@
     ViewData["Title"] = "GetPaymentReport";
 }
 
-<h1>GetPaymentReport</h1>
+<h1>Get Payment Report</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OfferCartId)
+                Offer Cart ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
+                Total Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentStatus)
+                Payment Status
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CompletedDate)
+                Completed Date
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfferCartId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompletedDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferCartId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedDate)
+                </td>
+                <td>
+                    <a class="btn btn-light" asp-action="Details" asp-controller="OfferCart" asp-area="AdminPanel" asp-route-offerCartId="@item.OfferCartId">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

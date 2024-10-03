@@ -4,44 +4,40 @@
     ViewData["Title"] = "GetMoldProductionReport";
 }
 
-<h1>GetMoldProductionReport</h1>
+<h1>Get Mold Production Report</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OfferCartId)
+                OfferCart ID
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MoldProductionStatus)
+                Mold Production Status
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfferCartId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoldProductionStatus)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferCartId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoldProductionStatus)
+                </td>
+                <td>
+                    <a class="btn btn-light" asp-action="Details" asp-controller="OfferCart" asp-area="AdminPanel" asp-route-offerCartId="@item.OfferCartId">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

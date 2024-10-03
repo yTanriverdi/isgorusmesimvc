@@ -4,74 +4,43 @@
     ViewData["Title"] = "GetMessagesByUserId";
 }
 
-<h1>GetMessagesByUserId</h1>
+<h1 class="mb-4">Offer Cart Messages</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OfferCartMessageId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppUserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OfferCartId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Message)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AddedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeleteDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfferCartMessageId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppUserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfferCartId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeleteDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container">
+    <div class="card shadow-lg p-4">
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="message-thread">
+                    @foreach (var item in Model)
+                    {
+                        <div class="message-item mb-4 p-3 @(item.IsActive ? "bg-light" : "bg-secondary text-black") rounded">
+                            <div class="d-flex justify-content-between mb-2">
+                                <strong>User: @item.AppUserId (Username: @item.AppUserId)</strong>
+                                <span class="text-muted small">Added on: @item.AddedDate.ToString("dd MMM yyyy HH:mm")</span>
+                            </div>
+                            <p class="message-text">@item.Message</p>
+                            <div class="small text-muted d-flex justify-content-between">
+                                <span>Offer Cart ID: @item.OfferCartId</span>
+                                @if (item.UpdateDate.HasValue)
+                                {
+                                    <span>Updated: @item.UpdateDate.Value.ToString("dd MMM yyyy HH:mm")</span>
+                                }
+                                @if (item.DeleteDate.HasValue)
+                                {
+                                    <span>Deleted: @item.DeleteDate.Value.ToString("dd MMM yyyy HH:mm")</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center">
+                    <strong>No messages found for this offer cart.</strong>
+                </div>
+            }
+        </div>
+    </div>
+</div>

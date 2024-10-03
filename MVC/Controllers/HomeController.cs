@@ -16,6 +16,7 @@ namespace MVC.Controllers
         public IActionResult Index()
         {
             return View();
+            //return RedirectToAction("Index", "User", new { area = "AdminPanel" });
         }
 
         public IActionResult Privacy()

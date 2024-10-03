@@ -1,124 +1,121 @@
-﻿@* @using MVC.Areas.AdminPanel.Models.VMs.Report
-@model GetOfferCartSummaryReportVM
-<div class="list-group">
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetOfferCartSummaryReport">Başlangıç ve Bitiş Tarihine Göre Siparişleri Göster</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetUserActivityReport">Kullanıcıya göre tüm sipariş göster</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductOfferStatusReport">Sipariş aşamasındaki tüm ürünleri göster</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetApprovedOfferCartReport">Onaylı tüm siparişleri göster</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetPaymentReport">Siparişleri Fatura Ödeme Durumlarını Göster.</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetRejectedOffersReport">Reddedilen teklifleri göster.</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetMoldProductionReport">Kalıp aşamasındaki siparişleri göster.</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductAccordingToLike">En Çok Beğenilen Ürünleri Göster</a>
-    <a class="btn btn-light" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductAccordingToViews">En Çok Görüntülenen Ürünleri Göster</a>
-</div> *@
-
-    @using MVC.Areas.AdminPanel.Models.VMs.Report
+﻿@using MVC.Areas.AdminPanel.Models.VMs.Report
 @model GetOfferCartSummaryReportVM
 
-<div class="list-group p-4">
-    <!-- Başlık -->
-    <h2 class="mb-4 text-center">Rapor Seçenekleri</h2>
+<!-- Başlık -->
+<h2 class="mb-4 text-center">Rapor Seçenekleri</h2>
 
-    <!-- Tarihe Göre Siparişler -->
-    <div class="card mb-3">
-        <div class="card-header bg-primary text-white">Tarihe Göre Siparişleri Göster</div>
-        <div class="card-body">
-            <form method="get" asp-area="AdminPanel" asp-controller="Report" asp-action="GetOfferCartSummaryReport">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="startDate">Başlangıç Tarihi:</label>
-                        <input type="date" name="startDate" class="form-control" />
+<div class="row p-4">
+
+    <!-- Sol Taraf -->
+    <div class="mb-3 col-md-6 col-sm-12">
+
+        <!-- Tarihe Göre Siparişler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">Tarihe Göre Siparişleri Göster</div>
+            <div class="card-body">
+                <form method="get" asp-area="AdminPanel" asp-controller="Report" asp-action="GetOfferCartSummaryReport">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="startDate">Başlangıç Tarihi:</label>
+                            <input type="date" name="startDate" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="endDate">Bitiş Tarihi:</label>
+                            <input type="date" name="endDate" class="form-control" />
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="endDate">Bitiş Tarihi:</label>
-                        <input type="date" name="endDate" class="form-control" />
+                    <button type="submit" class="btn btn-light w-100">Göster</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Kullanıcıya Göre Siparişler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">Kullanıcıya Göre Siparişleri Göster</div>
+            <div class="card-body">
+                <form method="get" asp-area="AdminPanel" asp-controller="Report" asp-action="GetUserActivityReport">
+                    <div class="form-group">
+                        <label for="userId">Kullanıcı ID:</label>
+                        <input type="number" name="userId" class="form-control" />
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Göster</button>
-            </form>
+                    <button type="submit" class="btn btn-light w-100">Göster</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <!-- Kullanıcıya Göre Siparişler -->
-    <div class="card mb-3">
-        <div class="card-header bg-primary text-white">Kullanıcıya Göre Siparişleri Göster</div>
-        <div class="card-body">
-            <form method="get" asp-area="AdminPanel" asp-controller="Report" asp-action="GetUserActivityReport">
-                <div class="form-group">
-                    <label for="userId">Kullanıcı ID:</label>
-                    <input type="number" name="userId" class="form-control" />
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Göster</button>
-            </form>
+        <!-- Sipariş Aşamasındaki Ürünler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">Sipariş Aşamasındaki Tüm Ürünler</div>
+            <div class="card-body">
+                <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductOfferStatusReport">Göster</a>
+            </div>
         </div>
-    </div>
 
-    <!-- Sipariş Aşamasındaki Ürünler -->
-    <div class="card mb-3">
-        <div class="card-header bg-light">Sipariş Aşamasındaki Tüm Ürünler</div>
-        <div class="card-body">
-            <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductOfferStatusReport">Göster</a>
-        </div>
-    </div>
-
-    <!-- Onaylı Siparişler -->
-    <div class="card mb-3">
-        <div class="card-header bg-primary text-white">Onaylı Siparişleri Göster</div>
-        <div class="card-body">
-            <form method="get" asp-area="AdminPanel" asp-controller="Report" asp-action="GetApprovedOfferCartReport">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="startDate">Başlangıç Tarihi:</label>
-                        <input type="date" name="startDate" class="form-control" />
+        <!-- Onaylı Siparişler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">Onaylı Siparişleri Göster</div>
+            <div class="card-body">
+                <form method="get" asp-area="AdminPanel" asp-controller="Report" asp-action="GetApprovedOfferCartReport">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="startDate">Başlangıç Tarihi:</label>
+                            <input type="date" name="startDate" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="endDate">Bitiş Tarihi:</label>
+                            <input type="date" name="endDate" class="form-control" />
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="endDate">Bitiş Tarihi:</label>
-                        <input type="date" name="endDate" class="form-control" />
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Göster</button>
-            </form>
+                    <button type="submit" class="btn btn-light w-100">Göster</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Fatura Ödeme Durumları -->
-    <div class="card mb-3">
-        <div class="card-header bg-light">Fatura Ödeme Durumları</div>
-        <div class="card-body">
-            <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetPaymentReport">Göster</a>
+    
+    <!-- Sağ Taraf -->
+    <div class="mb-3 col-md-6 col-sm-12">
+        <!-- Fatura Ödeme Durumları -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">Fatura Ödeme Durumları</div>
+            <div class="card-body">
+                <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetPaymentReport">Göster</a>
+            </div>
+        </div>
+
+        <!-- Reddedilen Teklifler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">Reddedilen Teklifler</div>
+            <div class="card-body">
+                <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetRejectedOffersReport">Göster</a>
+            </div>
+        </div>
+
+        <!-- Kalıp Aşamasındaki Siparişler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">Kalıp Aşamasındaki Siparişler</div>
+            <div class="card-body">
+                <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetMoldProductionReport">Göster</a>
+            </div>
+        </div>
+
+        <!-- En Çok Beğenilen Ürünler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">En Çok Beğenilen Ürünler</div>
+            <div class="card-body">
+                <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductAccordingToLike">Göster</a>
+            </div>
+        </div>
+
+        <!-- En Çok Görüntülenen Ürünler -->
+        <div class="card mb-3">
+            <div class="card-header bg-light text-black">En Çok Görüntülenen Ürünler</div>
+            <div class="card-body">
+                <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductAccordingToViews">Göster</a>
+            </div>
         </div>
     </div>
 
-    <!-- Reddedilen Teklifler -->
-    <div class="card mb-3">
-        <div class="card-header bg-light">Reddedilen Teklifler</div>
-        <div class="card-body">
-            <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetRejectedOffersReport">Göster</a>
-        </div>
-    </div>
-
-    <!-- Kalıp Aşamasındaki Siparişler -->
-    <div class="card mb-3">
-        <div class="card-header bg-light">Kalıp Aşamasındaki Siparişler</div>
-        <div class="card-body">
-            <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetMoldProductionReport">Göster</a>
-        </div>
-    </div>
-
-    <!-- En Çok Beğenilen Ürünler -->
-    <div class="card mb-3">
-        <div class="card-header bg-light">En Çok Beğenilen Ürünler</div>
-        <div class="card-body">
-            <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductAccordingToLike">Göster</a>
-        </div>
-    </div>
-
-    <!-- En Çok Görüntülenen Ürünler -->
-    <div class="card mb-3">
-        <div class="card-header bg-light">En Çok Görüntülenen Ürünler</div>
-        <div class="card-body">
-            <a class="btn btn-light w-100" asp-area="AdminPanel" asp-controller="Report" asp-action="GetProductAccordingToViews">Göster</a>
-        </div>
-    </div>
+    
 </div>
 
