@@ -5,52 +5,72 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h5 class="card-title text-center mb-4">Create New Product</h5>
+<div class="d-flex justify-content-center  mt-3 ">
+	<div class="col-lg-6 ">
+		@if (TempData["SuccessMessage"] != null)
+		{
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				@TempData["SuccessMessage"]
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		}
 
-<h4>CreateProduct</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="AddProductDTO.ProductName" class="control-label"></label>
-                <input asp-for="AddProductDTO.ProductName" class="form-control" />
-                <span asp-validation-for="AddProductDTO.ProductName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddProductDTO.Description" class="control-label"></label>
-                <input asp-for="AddProductDTO.Description" class="form-control" />
-                <span asp-validation-for="AddProductDTO.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddProductDTO.Price" class="control-label"></label>
-                <input asp-for="AddProductDTO.Price" class="form-control" />
-                <span asp-validation-for="AddProductDTO.Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddProductDTO.MaterialId" class="control-label"></label>
-                <select class="form-select" asp-for="AddProductDTO.MaterialId" asp-items="Model.Materials"></select>
-                <span asp-validation-for="AddProductDTO.MaterialId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddProductDTO.CategoryId" class="control-label"></label>
-                <select class="form-select" asp-for="AddProductDTO.CategoryId" asp-items="Model.Categories"></select>
-                <span asp-validation-for="AddProductDTO.CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+		@if (TempData["ErrorMessage"] != null)
+		{
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				@TempData["ErrorMessage"]
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		}
+		<div class="card border shadow-lg rounded">
+			<div class="card-body p-4">
+				<form asp-action="Create" class="row g-3">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+					<div class="col-12">
+						<label asp-for="AddProductDTO.ProductName" class="form-label fw-bold">Product Name</label>
+						<input asp-for="AddProductDTO.ProductName" class="form-control" />
+						<span asp-validation-for="AddProductDTO.ProductName" class="text-danger"></span>
+					</div>
+
+					<div class="col-12">
+						<label asp-for="AddProductDTO.Description" class="form-label fw-bold">Description</label>
+						<input asp-for="AddProductDTO.Description" class="form-control" />
+						<span asp-validation-for="AddProductDTO.Description" class="text-danger"></span>
+					</div>
+
+					<div class="col-12">
+						<label asp-for="AddProductDTO.Price" class="form-label fw-bold">Price</label>
+						<input asp-for="AddProductDTO.Price" class="form-control" />
+						<span asp-validation-for="AddProductDTO.Price" class="text-danger"></span>
+					</div>
+
+					<div class="col-12">
+						<label asp-for="AddProductDTO.MaterialId" class="form-label fw-bold">Material</label>
+						<select class="form-select" asp-for="AddProductDTO.MaterialId" asp-items="Model.Materials"></select>
+						<span asp-validation-for="AddProductDTO.MaterialId" class="text-danger"></span>
+					</div>
+
+					<div class="col-12">
+						<label asp-for="AddProductDTO.CategoryId" class="form-label fw-bold">Category</label>
+						<select class="form-select" asp-for="AddProductDTO.CategoryId" asp-items="Model.Categories"></select>
+						<span asp-validation-for="AddProductDTO.CategoryId" class="text-danger"></span>
+					</div>
+
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary fw-bold">Create</button>
+						<a asp-action="GetAllProducts" asp-controller="Product" asp-area="AdminPanel" class="btn btn-secondary">Back to List</a>
+					</div>
+				</form>
+				<!-- End of Product Creation Form -->
+
+			</div>
+		</div>
+	</div>
 </div>
-
-<div>
-    <a asp-action="GetAllProducts" asp-controller="Product" asp-area="AdminPanel">Back to List</a>
-</div>
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

@@ -4,56 +4,65 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="card shadow-lg border-0 rounded">
+    <div class="card-header bg-primary text-white">
+        <h4 class="card-title mb-0">Product Information</h4>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Product ID</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.ProductId)</div>
+        </div>
 
-<div>
-    <h4>GetProductDetailsVM</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            <img src="~/images/@Model.ImageUrl" alt="Product Image" style="max-width:100px; max-height:100px;" />
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaterialName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaterialName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a class="btn btn-success" asp-action="GetAllProducts" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@Model.ProductId">Back To List</a>
-</div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Product Name</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.ProductName)</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Price</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.Price)</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Product Images</div>
+            <div class="col-sm-9">
+                <!-- Resimlerin listelenmesi -->
+                @if (Model.ImageUrls != null)
+                {
+                    <div class="row">
+                        @foreach (var imageUrl in Model.ImageUrls)
+                        {
+                            <div class="col-md-3 mb-3">
+                                <img src="~/images/@imageUrl" alt="Product Image" class="img-thumbnail" style="max-width: 150px; max-height: 150px;" />
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <img src="~/images/default.png" alt="Product Image" class="img-thumbnail" style="max-width: 150px; max-height: 150px;" />
+                }
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Description</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.Description)</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Material</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.MaterialName)</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Category</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.CategoryName)</div>
+        </div>
+    </div>
+    <div class="card-footer text-center">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-primary" }) |
+        <a asp-action="GetAllProducts" class="btn btn-secondary">Back to List</a>
+    </div>
+</div> 

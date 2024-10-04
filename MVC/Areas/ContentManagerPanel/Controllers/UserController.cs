@@ -65,7 +65,11 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         {
             var user = await _httpClient.PutAsJsonAsync($"{uri}/User/UpdateAdmin/{updateUserVM.Id}", updateUserVM);
             if (user.IsSuccessStatusCode)
-                return RedirectToAction("GetAllUserByRoles");
+            {
+                TempData["SuccessMessage"] = "Kullanıcı bilgileri başarıyla güncellendi.";
+                return RedirectToAction("GetUserDetails");
+            }
+            TempData["ErrorMessage"] = "Kullanıcı bilgileri güncellenemedi!";
             return View(updateUserVM);
         }
 

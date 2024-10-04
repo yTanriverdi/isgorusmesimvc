@@ -1,34 +1,47 @@
 ﻿@using MVC.Areas.AdminPanel.Models.VMs.User
 @model UserDetailVM
 
-<h2>Kullanıcı Detayları</h2>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">User Details</h2>
 
-@if (Model != null)
-{
-    <table class="table table-striped">
-        <tr>
-            <th>Ad</th>
-            <td>@Model.FirstName</td>
-        </tr>
-        <tr>
-            <th>Soyad</th>
-            <td>@Model.LastName</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>@Model.Email</td>
-        </tr>
-        <tr>
-            <th>Rol</th>
-            <td>@Model.Role</td>
-        </tr>
-    </table>
-}
-
-else
-{
-    <p>Kullanıcı bilgisi bulunamadı.</p>
-}
-<div>
-    <a class="btn btn-success" asp-action="UpdateAdmin" asp-controller="User" asp-area="ContentManagerPanel" asp-route-userId="@Model.Id">Profil Bilgilerini Güncelle</a>
+    @if (Model != null)
+    {
+        <div class="card shadow-lg">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">User Information</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td>@Model.Id</td>
+                        </tr>
+                        <tr>
+                            <th>First Name</th>
+                            <td>@Model.FirstName</td>
+                        </tr>
+                        <tr>
+                            <th>Last Name</th>
+                            <td>@Model.LastName</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.Email</td>
+                        </tr>
+                        <tr>
+                            <th>Role</th>
+                            <td>@Model.Role</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center mt-4" role="alert">
+            <strong>No user information found!</strong>
+        </div>
+    }
 </div>

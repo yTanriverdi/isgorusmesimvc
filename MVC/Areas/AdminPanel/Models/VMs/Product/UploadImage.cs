@@ -3,6 +3,6 @@
     public class UploadImage
     {
         public int ProductId { get; set; }
-        public string ImageUrl { get; set; }
+        public List<string> ImageUrls { get; set; }
     }
 }

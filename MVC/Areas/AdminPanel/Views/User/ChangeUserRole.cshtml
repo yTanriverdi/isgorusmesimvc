@@ -1,38 +1,50 @@
 ﻿@using MVC.Areas.AdminPanel.Models.VMs.User
-
 @model UserDetailVM
 
-<h2>Kullanıcı Rolünü Değiştir</h2>
+<h5 class="card-title text-center mb-4">Kullanıcı Rolünü Değiştir</h5>
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-lg-6">
+        <div class="card border shadow-lg rounded">
+            <div class="card-body p-4">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
 
-<form asp-action="ChangeUserRole" method="post">
-    <div>
-        <label for="FirstName">Ad</label>
-        <input type="text" id="FirstName" name="FirstName" value="@Model.FirstName" readonly />
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                <form asp-action="ChangeUserRole" method="post">
+                    <div class="mb-3">
+                        <label for="FirstName" class="form-label">Ad</label>
+                        <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="LastName" class="form-label">Soyad</label>
+                        <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" readonly />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="SelectedRoleId" class="control-label">Rol Seçin</label>
+                        <select class="form-select" asp-for="SelectedRoleId" asp-items="@ViewBag.Roles"></select>
+                        <span asp-validation-for="SelectedRoleId" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="LastName">Soyad</label>
-        <input type="text" id="LastName" name="LastName" value="@Model.LastName" readonly />
-    </div>
-    <div>
-        <label for="Email">Email</label>
-        <input type="email" id="Email" name="Email" value="@Model.Email" readonly />
-    </div>
-    <div class="form-group">
-        <label asp-for="SelectedRoleId" class="control-label"></label>
-        <select class="form-select" asp-for="SelectedRoleId" asp-items="@ViewBag.Roles"></select>
-        <span asp-validation-for="SelectedRoleId" class="text-danger"></span>
-    </div>
-    <input type="hidden" name="Id" value="@Model.Id" />
-    <button type="submit">Güncelle</button>
-</form>
-
-@* @if (ViewBag.UserRoles != null)
-{
-    <h3>Mevcut Roller:</h3>
-    <ul>
-        @foreach (var role in ViewBag.UserRoles)
-        {
-            <li>@role.Name</li>
-        }
-    </ul>
-} *@
+</div>

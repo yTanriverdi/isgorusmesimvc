@@ -15,37 +15,45 @@ namespace MVC.Areas.AdminPanel.Controllers
             _httpClient = httpClient;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         string uri = "http://localhost:5211/api";
 
-        [HttpPost]
-        public async Task<IActionResult> AddRefundRequest(int offerCartId)
-        {
-            await _httpClient.GetAsync($"{uri}/OfferCart/OfferCartRefundRequest/{offerCartId}");
-            return RedirectToAction();
-        }
-
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> RefundRequestAccept(int offerCartId)
         {
-            await _httpClient.GetAsync($"{uri}/OfferCart/OfferCartRefundRequestAccept/{offerCartId}");
-            return RedirectToAction();
+            await _httpClient.PutAsJsonAsync($"{uri}/OfferCart/OfferCartRefundRequestAcceptAdmin/{offerCartId}", new { });
+            return RedirectToAction(nameof(GetAllRefundRequestByAdmin));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllRefundRequest()
+        public async Task<IActionResult> GetAllRefundRequestByAdmin()
         {
-            var response = await _httpClient.GetAsync($"{uri}/OfferCart/GetRefundRequestOfferCards");
+            var response = await _httpClient.GetAsync($"{uri}/OfferCart/AllRefundRequestOfferCardsByAdmin");
             if (response.IsSuccessStatusCode)
             {
                 IEnumerable<OfferCartDTO> refundOfferCarts = await response.Content.ReadFromJsonAsync<IEnumerable<OfferCartDTO>>();
                 return View(refundOfferCarts);
             }
-            return NotFound("İade edilmek istenen siparişiniz yok || ÇOK İYİSİNİZ !!!!  :)");
+            return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AllCompletedRefundRequest()
+        {
+            var response = await _httpClient.GetAsync($"{uri}/OfferCart/AllCompletedRefundRequest");
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<OfferCartDTO> refundOfferCarts = await response.Content.ReadFromJsonAsync<IEnumerable<OfferCartDTO>>();
+                return View(refundOfferCarts);
+            }
+            return NotFound("Henüz iadesi tamamlanmış bir iade işleminiz yok..");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> RefundRequestDecline(int offerCartId)
+        {
+            await _httpClient.PutAsJsonAsync($"{uri}/OfferCart/OfferCartRefundRequestDeclineAdmin/{offerCartId}", new { });
+            return RedirectToAction(nameof(GetAllRefundRequestByAdmin));
         }
     }
 }

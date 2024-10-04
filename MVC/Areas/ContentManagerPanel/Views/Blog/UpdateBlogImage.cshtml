@@ -1,0 +1,27 @@
+﻿@using MVC.Areas.ContentManagerPanel.Models.VMs.Blog
+@model BlogImageVM
+
+@{
+    ViewData["Title"] = "Blog Image Upload";
+}
+
+<h2>Blog Image Upload</h2>
+
+<form asp-area="ContentManagerPanel" asp-action="UpdateBlogImage" asp-controller="Blog" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <input asp-for="BlogId" class="form-control" type="hidden" />
+        <span asp-validation-for="BlogId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="File" class="control-label"></label>
+        <input asp-for="File" type="file" class="form-control" />
+        <span asp-validation-for="File" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Upload Image</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

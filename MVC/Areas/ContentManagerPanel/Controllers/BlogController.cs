@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MVC.Areas.AdminPanel.Models.VMs.Category;
 using MVC.Areas.AdminPanel.Models.VMs.Product;
 using MVC.Areas.ContentManagerPanel.Models.DTOs.Blog;
+using MVC.Areas.ContentManagerPanel.Models.VMs.Blog;
 using MVC.Models.DTOs;
 using System.Security.Claims;
 
@@ -99,6 +100,54 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
                 return View(listBlogDto);
             }
             return BadRequest();
+        }
+
+        //resim yükleme metodu
+        public async Task<IActionResult> UpdateBlogImage(int BlogId)
+        {
+            var response = await _httpClient.GetAsync($"{uri}/FindBlog/{BlogId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var blog = await response.Content.ReadAsStringAsync();
+                bool blogExists = bool.Parse(blog);
+
+                if (blogExists)
+                {
+                    var vm = new BlogImageVM
+                    {
+                        BlogId = BlogId
+                    };
+                    return View(vm);
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBlogImage(BlogImageVM vm)
+        {
+            if (vm.File == null || vm.File.Length == 0)
+            {
+                TempData["ErrorMessage"] = "Lütfen bir resim dosyası seçin!";
+                return View(vm);
+            }
+            string path = "wwwroot/BlogImages/" + vm.File.FileName;
+            FileStream fs = new FileStream(path, FileMode.Create);
+            await vm.File.CopyToAsync(fs);
+            fs.Close();
+
+            BlogImage uploadImage = new BlogImage();
+            uploadImage.BlogId = vm.BlogId;
+            uploadImage.ImageUrl = vm.File.FileName;
+            var response = await _httpClient.PostAsJsonAsync($"{uri}/UpdateProductImage", uploadImage);
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Resim başarıyla yüklendi!";
+                return RedirectToAction("GetAllBlogs");
+            }
+            TempData["ErrorMessage"] = "Lütfen bir resim dosyası seçin!";
+            return View(vm);
+
         }
     }
 }

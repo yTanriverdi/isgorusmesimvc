@@ -1,0 +1,104 @@
+﻿@model MVC.Areas.AdminPanel.Models.DTOs.OfferCart.OfferCartDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="pagetitle">
+    <h1>Offer Cart Detail</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item">Sales</li>
+            <li class="breadcrumb-item active">Offer Carts</li>
+            <li class="breadcrumb-item active">Offer Cart Detail</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="card shadow-lg border-0 rounded">
+    <div class="card-header bg-light text-white mb-3">
+        <h4 class="card-title mb-0">Offer Cart Information</h4>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Offer Cart ID</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.OfferCartId)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Customer ID</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.AppUserId)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Customer Name</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.AppUser.FirstName) @Html.DisplayFor(model => model.AppUser.LastName)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Product ID</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.ProductId)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Product Name</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.Product.ProductName)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Amount</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.Amount)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Address</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.Address)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Total Price</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.TotalPrice)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Completed Date</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.CompletedDate)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Accept Admin</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.AcceptAdmin)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Accept Customer Service</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.AcceptCustomerService)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Accept Customer</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.AcceptVisitor)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Is Approved</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.IsApproved)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Is Sample</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.IsSample)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Is Mold</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.IsMold)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Is Finalization</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.IsFinalization)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Added Date</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.AddedDate)</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-bold">Updated Date</div>
+            <div class="col-sm-9">@Html.DisplayFor(model => model.UpdateDate)</div>
+        </div>
+    </div>
+
+    <div class="card-footer text-center">
+        <a asp-action="GetAllOfferCarts" class="btn btn-secondary">Back to List</a> | 
+        <a asp-action="Details" asp-route-OfferCartId="@Model.OfferCartId" class="btn btn-success">Değişiklikleri Onayla</a>
+    </div>
+</div>
+
+

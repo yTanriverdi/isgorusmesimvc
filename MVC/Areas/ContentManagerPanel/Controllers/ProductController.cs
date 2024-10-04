@@ -63,10 +63,11 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
             var response2 = await _httpClient.PostAsJsonAsync($"{uri}/Product/AddProduct", vm.AddProductDTO);
             if (response2.IsSuccessStatusCode)
             {
+                TempData["SuccessMessage"] = "Ürün başarıyla eklendi.";
                 return RedirectToAction("GetAllProducts");
             }
+            TempData["ErrorMessage"] = "Ürün ekleme başarısız!";
             return View(vm);
-
         }
 
         UpdateProductVM Updatevm = new UpdateProductVM();
@@ -101,12 +102,13 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProductVM vm)
         {
-
             var response3 = await _httpClient.PutAsJsonAsync($"{uri}/Product/UpdateProduct", vm.UpdateProductDTO);
             if (response3.IsSuccessStatusCode)
             {
+                TempData["SuccessMessage"] = "Ürün başarıyla güncellendi.";
                 return RedirectToAction("GetAllProducts");
             }
+            TempData["ErrorMessage"] = "Güncelleme başarısız!";
             return View(vm);
         }
 
@@ -117,6 +119,7 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
             var response = await _httpClient.DeleteAsync($"{uri}/Product/DeleteProduct/{ProductId}");
             if (response.IsSuccessStatusCode)
             {
+                TempData["SuccessMessage"] = "Ürün başarıyla silindi.";
                 return RedirectToAction("GetAllProducts");
             }
             return NotFound();
@@ -187,26 +190,50 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateProductImage(UploadProductImageVM vm)
-        {
+		[HttpPost]
+		public async Task<IActionResult> UpdateProductImage(UploadProductImageVM vm)
+		{
+			if (vm.Files == null || !vm.Files.Any())
+			{
+				TempData["ErrorMessage"] = "Lütfen en az bir resim dosyası seçin!";
+				return View(vm);
+			}
 
-            string path = "wwwroot/images/" + vm.File.FileName;
-            FileStream fs = new FileStream(path, FileMode.Create);
-            await vm.File.CopyToAsync(fs);
-            fs.Close();
+			List<string> uploadedImageUrls = new List<string>();
 
-            UploadImage uploadImage = new UploadImage();
-            uploadImage.ProductId = vm.ProductId;
-            uploadImage.ImageUrl = vm.File.FileName;
-            var response = await _httpClient.PostAsJsonAsync($"{uri}/Product/UpdateProductImage", uploadImage);
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction("GetAllProducts");
-            }
-            return View(vm);
+			// Her dosya için işlemi gerçekleştir
+			foreach (var file in vm.Files)
+			{
+				if (file.Length > 0)
+				{
+					string path = Path.Combine("wwwroot/images", file.FileName);
+					using (FileStream fs = new FileStream(path, FileMode.Create))
+					{
+						await file.CopyToAsync(fs);
+					}
 
-        }
+					uploadedImageUrls.Add(file.FileName); // Yüklenen resim URL'sini listeye ekle
+				}
+			}
+
+			// UploadImage nesnesini oluştur ve API'ye gönder
+			UploadImage uploadImage = new UploadImage
+			{
+				ProductId = vm.ProductId,
+				ImageUrls = uploadedImageUrls // Birden fazla URL'yi liste olarak API'ye gönder
+			};
+
+			var response = await _httpClient.PostAsJsonAsync($"{uri}/Product/UpdateProductImage", uploadImage); // API'ye çoklu resimleri gönder
+			if (response.IsSuccessStatusCode)
+			{
+				TempData["SuccessMessage"] = "Resimler başarıyla yüklendi!";
+				return RedirectToAction("GetAllProducts");
+			}
+
+			TempData["ErrorMessage"] = "Resim yükleme başarısız oldu.";
+			return View(vm);
+
+		}
 
 
 
@@ -221,5 +248,5 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
 
 
 
-    }
+	}
 }

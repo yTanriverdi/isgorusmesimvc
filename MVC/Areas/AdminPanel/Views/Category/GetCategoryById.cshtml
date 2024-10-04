@@ -5,37 +5,39 @@
     ViewData["Title"] = "Kategori: " + Model.CategoryName + " Ürünleri";
 }
 
-<h1>Ürünler</h1>
+<h1 class="text-center mb-4">Products</h1>
 
-<h4>@Model.CategoryName</h4>
+<h4 class="text-center">@Model.CategoryName</h4>
 <hr />
 
 @if (Model.Products != null && Model.Products.Any())
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Products.First().ProductName)</th>
-                <th>@Html.DisplayNameFor(model => model.Products.First().Description)</th>
-                <th>@Html.DisplayNameFor(model => model.Products.First().Price)</th>
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model.Products)
-            {
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(m => product.ProductName)</td>
-                    <td>@Html.DisplayFor(m => product.Description)</td>
-                    <td>@Html.DisplayFor(m => product.Price)</td> <!-- Para birimini belirtmek için -->
-                    <td>
-                        @Html.ActionLink("Düzenle", "Edit", "Product", new { id = product.ProductId }, null) |
-                        @Html.ActionLink("Sil", "Delete", "Product", new { id = product.ProductId }, new { onclick = "return confirm('Silmek istediğinize emin misiniz?');" })
-                    </td>
+                    <th>@Html.DisplayNameFor(model => model.Products.First().ProductName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Products.First().Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.Products.First().Price)</th>
+                    <th>İşlemler</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td class="product-name">@Html.DisplayFor(m => product.ProductName)</td>
+                        <td>@Html.DisplayFor(m => product.Description)</td>
+                        <td>@Html.DisplayFor(m => product.Price)</td>
+                        <td>
+                            <a class="btn btn-warning btn-sm" asp-action="Update" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@product.ProductId">Update</a> |
+                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-controller="Product" asp-area="AdminPanel" asp-route-ProductId="@product.ProductId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
@@ -44,6 +46,46 @@ else
     </div>
 }
 
-<div>
+<div class="text-center mt-3">
     <a asp-action="GetAllCategories" asp-controller="Category" asp-area="AdminPanel" class="btn btn-primary">Geri Dön</a>
 </div>
+
+<style>
+    /* Custom styles */
+    .table-responsive {
+        margin: 20px 0;
+    }
+
+    .table th {
+        background-color: #f8f9fa; /* Light gray background for headers */
+    }
+
+    .product-name {
+        color: #007BFF; /* Change this to your desired color */
+        font-weight: bold; /* Make the product name bold */
+        text-decoration: underline; /* Underline the product name */
+    }
+
+    .btn-warning {
+        background-color: #ffc107; /* Custom yellow color for Edit button */
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Custom red color for Delete button */
+        color: white;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800; /* Darker yellow for hover effect */
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333; /* Darker red for hover effect */
+    }
+
+    /* Center text for headings */
+    h1, h4 {
+        text-align: center;
+    }
+</style>

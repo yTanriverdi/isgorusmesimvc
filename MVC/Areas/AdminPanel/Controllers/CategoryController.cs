@@ -33,33 +33,12 @@ namespace MVC.Areas.AdminPanel.Controllers
         //kategori id ile o kategoriye ait ürünleri listeleme
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            //var response = await _httpClient.GetAsync($"{uri}/GetCategoryById/{CategoryId}");
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var products = await response.Content.ReadFromJsonAsync<List<GetAllProductsOfCategoryVM>>();
-            //    return View(products);
-            //}
-            //return NotFound();
+            
             var response = await _httpClient.GetAsync($"{uri}/GetCategoryById/{id}");
             if (response.IsSuccessStatusCode)
             {
-                // GetAllProductsOfCategoryDTO döndüğünden doğru türde okumalıyız
                 var categoryData = await response.Content.ReadFromJsonAsync<GetAllProductsOfCategoryVM>();
 
-                //if (categoryData != null)
-                //{
-                //    // ViewModel'i doldur
-                //    var viewModel = new GetAllProductsOfCategoryVM
-                //    {
-                //        CategoryId = categoryData.CategoryId,
-                //        CategoryName = categoryData.CategoryName,
-                //        Products = categoryData.Products // Eğer Products ICollection türündeyse, burası doğru çalışacaktır.
-                //    };
-
-                //    return View(viewModel);
-                //}
-
-           
                 return View(categoryData); // Kategori yoksa
             }
             return NotFound(); // API çağrısı başarısızsa
@@ -76,7 +55,11 @@ namespace MVC.Areas.AdminPanel.Controllers
         {
             var response = await _httpClient.PostAsJsonAsync($"{uri}/AddCategory", category);
             if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Kategori başarıyla eklendi";
                 return RedirectToAction("GetAllCategories");
+            }
+            TempData["ErrorMessage"] = "Kategori ekleme başarısız!";
             return View(category);
         }
 
@@ -100,7 +83,11 @@ namespace MVC.Areas.AdminPanel.Controllers
         {
             var response = await _httpClient.PutAsJsonAsync($"{uri}/UpdateCategory", category);
             if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Kategori başarıyla güncellendi";
                 return RedirectToAction("GetAllCategories");
+            }
+            TempData["ErrorMessage"] = "Kategori güncelleme başarısız!";
             return View(category);
         }
 
@@ -110,17 +97,12 @@ namespace MVC.Areas.AdminPanel.Controllers
         {
             var response = await _httpClient.DeleteAsync($"{uri}/DeleteCategory/{id}");
             if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Kategori başarıyla silindi";
                 return RedirectToAction("Index");
+            }
             return NotFound();
         }
-
-
-
-        //Category aktif etme(metodunu repo-servise-api'de yazman lazım.Sonra burada oluştur)
-    
-
-
-
 
         //Arama motorundaki kelimeye göre kategroileri bulup getirme
         public async Task<IActionResult> SearchCategoryByKeyword(string keyword)

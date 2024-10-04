@@ -12,11 +12,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Data\" />
-    <Folder Include="Areas\AdminPanel\Models\VMs\Log\" />
     <Folder Include="Areas\ContentManagerPanel\Data\" />
     <Folder Include="Areas\CustomerServicePanel\Data\" />
-    <Folder Include="Areas\CustomerServicePanel\Models\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\BlogImages\" />
     <Folder Include="wwwroot\ProductPictures\" />
   </ItemGroup>
 

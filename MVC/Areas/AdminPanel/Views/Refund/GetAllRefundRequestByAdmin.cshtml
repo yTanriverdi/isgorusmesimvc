@@ -1,0 +1,86 @@
+﻿@model IEnumerable<MVC.Areas.AdminPanel.Models.DTOs.OfferCart.OfferCartDTO>
+
+@{
+    ViewData["Title"] = "GetAllRefundRequest";
+}
+
+<h1>Refunds</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Offer Cart ID
+            </th>
+            <th>
+                Customer Name ve ID
+            </th>
+            <th>
+                Product Details
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th>
+                Refund Status
+            </th>
+            <th>
+                Added Time
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferCartId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppUser.FirstName) @Html.DisplayFor(modelItem => item.AppUserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductName) @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+
+                @if (item.IsRefundRequest == true && item.AcceptRefundRequest == false && item.RefundCustomerService == true)
+                {
+                    <td>Refund Waiting</td>
+                }
+                @if (item.IsRefundRequest == true && item.AcceptRefundRequest == true && item.RefundCustomerService == true)
+                {
+                    <td>Refund Accepted</td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedDate)
+                </td>
+                <td>
+                    @if (item.IsRefundRequest == true && item.AcceptRefundRequest == true && item.RefundCustomerService == true)
+                    {
+                        <a class="btn btn-outline-danger" asp-route-offerCartId="@item.OfferCartId" asp-action="RefundRequestDecline" asp-controller="Refund" asp-area="AdminPanel">Cancel Refund</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-info" asp-route-offerCartId="@item.OfferCartId" asp-action="RefundRequestAccept" asp-controller="Refund" asp-area="AdminPanel">Accept Refund</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

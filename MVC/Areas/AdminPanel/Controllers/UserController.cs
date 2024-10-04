@@ -81,7 +81,11 @@ namespace MVC.Areas.AdminPanel.Controllers
         {
             var user = await _httpClient.PutAsJsonAsync($"{uri}/User/UpdateUser/{updateUserVM.Id}", updateUserVM);
             if (user.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Admin bilgileri başarıyla güncellendi.";
                 return RedirectToAction("GetAllUserByRoles");
+            }
+            TempData["ErrorMessage"] = "Admin bilgileri güncellenemedi!";
             return View(updateUserVM);
         }
 
@@ -131,9 +135,11 @@ namespace MVC.Areas.AdminPanel.Controllers
                 var response = await _httpClient.PutAsJsonAsync($"{uri}/Role/ChangeUserRole", request);
                 if (response.IsSuccessStatusCode)
                 {
+                    TempData["SuccessMessage"] = "Role başarıyla güncellendi.";
                     return RedirectToAction("GetAllUserByRoles");
                 }
             }
+            TempData["ErrorMessage"] = "Role güncellenemedi!";
             return BadRequest();
         }
 

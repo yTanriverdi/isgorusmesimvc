@@ -57,10 +57,20 @@ namespace MVC.Areas.CustomerServicePanel.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateAdmin(UpdateUserVM updateUserVM)
         {
-            var user = await _httpClient.PutAsJsonAsync($"{uri}/User/UpdateUser/{updateUserVM.Id}", updateUserVM);
+            var user = await _httpClient.PutAsJsonAsync($"{uri}/User/UpdateAdmin/{updateUserVM.Id}", updateUserVM);
+
             if (user.IsSuccessStatusCode)
+
+            {
+                TempData["SuccessMessage"] = "Kullanıcı bilgileri başarıyla güncellendi.";
+
                 return RedirectToAction("GetUserDetails");
+            }
+
+            TempData["ErrorMessage"] = "Kullanıcı bilgileri güncellenemedi!";
+
             return View(updateUserVM);
+
         }
 
 

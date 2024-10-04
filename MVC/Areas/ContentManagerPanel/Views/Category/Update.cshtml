@@ -4,35 +4,52 @@
     ViewData["Title"] = "Update";
 }
 
-<h1>Update</h1>
+<h5 class="card-title text-center mb-4">Update Category</h5>
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-lg-6">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @* <label asp-for="CategoryId" class="control-label"></label> *@
-                <input asp-for="CategoryId" class="form-control" type="hidden" />
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoryName" class="control-label"></label>
-                <input asp-for="CategoryName" class="form-control" />
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
+        }
+        <div class="card border shadow-lg rounded">
+            <div class="card-body p-4">
+                <form asp-action="Update" class="row g-3">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="col-12">
+                        <input asp-for="CategoryId" class="form-control" type="hidden" />
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="CategoryName" class="form-label fw-bold">Category Name</label>
+                        <input asp-for="CategoryName" class="form-control" />
+                        <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary fw-bold">Update</button>
+                        <a asp-action="GetAllCategories" asp-controller="Category" asp-area="ContentManagerPanel" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="GetAllCategories" asp-controller="Category" asp-area="AdminPanel">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

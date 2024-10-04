@@ -4,38 +4,87 @@
     ViewData["Title"] = "GetAllCategories";
 }
 
-<h1>GetAllCategories</h1>
+<h1 class="mb-4 text-center"> All Categories</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Update", new {  id=item.CategoryId }) |
-                    @Html.ActionLink("Details", "GetCategoryById", new { id = item.CategoryId }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.CategoryId  })
-            </td>
-        </tr>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
-    </tbody>
-</table>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 rounded">
+                <div class="card-header custom-header">
+                    <h5 class="card-title mb-0">Category ID: @Html.DisplayFor(model => item.CategoryId)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Category Name</div>
+                        <div class="col-sm-8">@Html.DisplayFor(model => item.CategoryName)</div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="card-footer text-center">
+                        @Html.ActionLink("Edit", "Update", new { id = item.CategoryId }, new { @class = "btn btn-edit" }) |
+                        @Html.ActionLink("Details", "GetCategoryById", new { id = item.CategoryId }, new { @class = "btn btn-details" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId }, new { @class = "btn btn-delete" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .custom-header {
+        background-color: dimgray; /* Başlık için mavi arka plan */
+        color: white; /* Beyaz metin rengi */
+    }
+
+    .btn-edit {
+        background-color: #FFC107; /* Turuncu renk */
+        color: white; /* Beyaz metin rengi */
+    }
+
+        .btn-edit:hover {
+            background-color: #E0A800; /* Hover durumu için daha koyu turuncu */
+        }
+
+    .btn-details {
+        background-color: #17A2B8; /* Mavi renk */
+        color: white; /* Beyaz metin rengi */
+    }
+
+        .btn-details:hover {
+            background-color: #138496; /* Hover durumu için daha koyu mavi */
+        }
+
+    .btn-delete {
+        background-color: #DC3545; /* Kırmızı renk */
+        color: white; /* Beyaz metin rengi */
+    }
+
+        .btn-delete:hover {
+            background-color: #C82333; /* Hover durumu için daha koyu kırmızı */
+        }
+
+    .card {
+        margin-bottom: 20px; /* Kartlar arasındaki boşluk */
+    }
+</style>

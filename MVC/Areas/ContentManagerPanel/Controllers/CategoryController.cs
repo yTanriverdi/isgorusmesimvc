@@ -54,7 +54,11 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         {
             var response = await _httpClient.PostAsJsonAsync($"{uri}/AddCategory", category);
             if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Kategori başarıyla eklendi";
                 return RedirectToAction("GetAllCategories");
+            }
+            TempData["ErrorMessage"] = "Kategori ekleme başarısız!";
             return View(category);
         }
 
@@ -78,7 +82,11 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         {
             var response = await _httpClient.PutAsJsonAsync($"{uri}/UpdateCategory", category);
             if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Kategori başarıyla güncellendi";
                 return RedirectToAction("GetAllCategories");
+            }
+            TempData["ErrorMessage"] = "Kategori güncelleme başarısız!";
             return View(category);
         }
 
@@ -88,7 +96,10 @@ namespace MVC.Areas.ContentManagerPanel.Controllers
         {
             var response = await _httpClient.DeleteAsync($"{uri}/DeleteCategory/{id}");
             if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Kategori başarıyla silindi";
                 return RedirectToAction("Index");
+            }
             return NotFound();
         }
 

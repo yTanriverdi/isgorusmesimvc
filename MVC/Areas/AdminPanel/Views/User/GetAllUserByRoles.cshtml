@@ -1,46 +1,68 @@
 ﻿@using MVC.Areas.AdminPanel.Models.VMs.User
 @model Dictionary<string, List<MVC.Areas.AdminPanel.Models.VMs.User.UserDetailVM>>
 
-
-
-@if (Model != null && Model.Count > 0)
-{
-    @foreach (var roleGroup in Model)
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
     {
-        <h3>@roleGroup.Key Rolündeki Kullanıcılar</h3> <!-- roleGroup.Key role'ü temsil eder -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Ad</th>
-                    <th>Soyad</th>
-                    <th>Email</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in roleGroup.Value) 
-                {
-                    <tr>
-                        <td>@user.Id</td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.Email</td>
-                        <td>
-                            <a class="btn btn-warning" asp-action="ChangeUserRole" asp-controller="User" asp-area="AdminPanel" asp-route-id="@user.Id">Role Değiştir</a>
-                            <a class="btn btn-success" asp-action="GetUserDetails" asp-route-userId="@user.Id">Profil Detayı</a>
-                            @if (user.Role == "Admin")
-                            {
-                                <a class="btn btn-success" asp-action="UpdateUser" asp-route-userId="@user.Id">Profil Güncelle</a>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     }
-}
-else
-{
-    <p>Kullanıcı bulunamadı.</p>
-}
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (Model != null && Model.Count > 0)
+    {
+        @foreach (var roleGroup in Model)
+        {
+            <div class="mb-4 text-center">
+                <h3 class="display-8 font-weight-bold text-primary">@roleGroup.Key Rolündeki Kullanıcılar</h3>
+                <div class="text-muted mb-2">
+                    <p class="lead">Toplam Kullanıcı Sayısı: <strong>@roleGroup.Value.Count</strong></p>
+                </div>
+                <hr class="my-4" style="border-top: 2px solid #007bff;" />
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                @foreach (var user in roleGroup.Value)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">@user.FirstName @user.LastName</h5>
+                                <p class="card-text">Email: <strong>@user.Email</strong></p>
+                                <p class="card-text">User ID: <strong>@user.Id</strong></p>
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-warning btn-sm" asp-action="ChangeUserRole" asp-controller="User" asp-area="AdminPanel" asp-route-id="@user.Id">
+                                        <i class="fas fa-user-cog"></i> Change Role
+                                    </a>
+                                    <a class="btn btn-success btn-sm" asp-action="GetUserDetails" asp-route-userId="@user.Id">
+                                        <i class="fas fa-info-circle"></i> Profile Details
+                                    </a>
+                                    @if (user.Role == "Admin")
+                                    {
+                                        <a class="btn btn-primary btn-sm" asp-action="UpdateAdmin" asp-controller="User" asp-area="AdminPanel" asp-route-userId="@user.Id">
+                                            <i class="fas fa-edit"></i> Update Admin
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <hr />
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            <strong>Kullanıcı bulunamadı!</strong>
+        </div>
+    }
+</div>

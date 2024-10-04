@@ -49,7 +49,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="User" asp-action="GetAllUserByRoles">
                         <i class="bi bi-person"></i>
-                        <span>Kullanıcı Yönetimi</span>
+                        <span>User Management</span>
                     </a>
                 </li>
 
@@ -72,7 +72,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-gem"></i><span>Ürün Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-gem"></i><span>Product Management</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
@@ -87,7 +87,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-menu-button-wide"></i><span>Kategori Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-menu-button-wide"></i><span>Category Management</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
@@ -102,11 +102,11 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-journal-text"></i><span>İade Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-journal-text"></i><span>Refund Management</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a asp-area="AdminPanel" asp-controller="Refund" asp-action="GetAllRefundRequest">
+                            <a asp-area="AdminPanel" asp-controller="Refund" asp-action="GetAllRefundRequestByAdmin">
                                 <i class="bi bi-circle"></i><span>Refunds</span>
                             </a>
                         </li>
@@ -117,12 +117,12 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-check"></i><span>İşlem Onayları</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-check"></i><span>Confirmations</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
                             <a asp-area="AdminPanel" asp-controller="Product" asp-action="GetAllProductsForAdmin">
-                                <i class="bi bi-circle"></i><span>Ürün Onayı</span>
+                                <i class="bi bi-circle"></i><span>Product Approval</span>
                             </a>
                         </li>
                     </ul>
@@ -133,7 +133,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="Report" asp-action="Index">
                         <i class="bi bi-layout-text-window-reverse"></i>
-                        <span>İstatiksel Raporlar</span>
+                        <span>Reports</span>
                     </a>
                 </li>
 
@@ -142,7 +142,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="OfferCartMessage" asp-action="Index">
                         <i class="bi bi-envelope"></i>
-                        <span>İletişim Kontrolü</span>
+                        <span>Communication Control</span>
                     </a>
                 </li>
 
@@ -151,7 +151,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" asp-area="AdminPanel" asp-controller="Log" asp-action="GetAllLogs">
                         <i class="bi bi-dash-circle"></i>
-                        <span>Log Reports</span>
+                        <span>Log Data</span>
                     </a>
                 </li>
 
@@ -168,7 +168,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-gem"></i><span>Ürün Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-gem"></i><span>Product Management</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
@@ -181,7 +181,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-menu-button-wide"></i><span>Kategori Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-menu-button-wide"></i><span>Category Management</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
@@ -194,7 +194,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-menu-button-wide"></i><span>Haber ve Blog Yönetimi</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-menu-button-wide"></i><span>News & Blogs Management</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
@@ -209,8 +209,33 @@
             else if (userIsCustomerService)
             {
                 <li class="nav-item">
-                    <a id="manage" class="nav-link text-dark" asp-area="CustomerServicePanel" asp-controller="Panel" asp-action="Index">Customer Service Panel</a>
+                    <a class="nav-link collapsed" asp-area="CustomerServicePanel" asp-controller="User" asp-action="UpdateAdmin" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
+                        <i class="bi bi-person"></i>
+                        <span>Profile</span>
+                    </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="CustomerServicePanel" asp-controller="Refund" asp-action="GetAllRefundRequestByCustomerService">
+                        <i class="bi bi-check"></i>
+                        <span>Refund Management</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="CustomerServicePanel" asp-controller="Sss" asp-action="GetAllSss">
+                        <i class="bi bi-check"></i>
+                        <span>F.A.Q Management</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="CustomerServicePanel" asp-controller="OfferCart" asp-action="GetAllOfferCartsForCustomerService">
+                        <i class="bi bi-gem"></i>
+                        <span>Offer Cart Management</span>
+                    </a>
+                </li>
+
             }
             else if (userIsVisitor)
             {

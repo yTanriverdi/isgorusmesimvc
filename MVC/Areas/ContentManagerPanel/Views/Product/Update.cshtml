@@ -5,52 +5,74 @@
     ViewData["Title"] = "Update";
 }
 
-<h1>Update</h1>
+<h5 class="card-title text-center mb-4">Update Product</h5>
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-lg-6">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
 
-<h4>UpdateProduct</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="UpdateProductDTO.ProductId" class="form-control" type="hidden" />
-                <span asp-validation-for="UpdateProductDTO.ProductId" class="text-danger"></span>
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label asp-for="UpdateProductDTO.ProductName" class="control-label"></label>
-                <input asp-for="UpdateProductDTO.ProductName" class="form-control" />
-                <span asp-validation-for="UpdateProductDTO.ProductName" class="text-danger"></span>
+        }
+        <div class="card border shadow-lg rounded">
+            <div class="card-body p-4">
+                <!-- Update Product Form -->
+                <form asp-action="Update" class="row g-3">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="col-12">
+                        <input asp-for="UpdateProductDTO.ProductId" class="form-control" type="hidden" />
+                        <span asp-validation-for="UpdateProductDTO.ProductId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="UpdateProductDTO.ProductName" class="form-label fw-bold"> </label>
+                        <input asp-for="UpdateProductDTO.ProductName" class="form-control" />
+                        <span asp-validation-for="UpdateProductDTO.ProductName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="UpdateProductDTO.Description" class="form-label fw-bold"></label>
+                        <input asp-for="UpdateProductDTO.Description" class="form-control" />
+                        <span asp-validation-for="UpdateProductDTO.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="UpdateProductDTO.Price" class="form-label fw-bold"></label>
+                        <input asp-for="UpdateProductDTO.Price" class="form-control" />
+                        <span asp-validation-for="UpdateProductDTO.Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="UpdateProductDTO.MaterialId" class="form-label fw-bold"></label>
+                        <select class="form-select" asp-for="UpdateProductDTO.MaterialId" asp-items="Model.Materials"></select>
+                        <span asp-validation-for="UpdateProductDTO.MaterialId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="UpdateProductDTO.CategoryId" class="form-label fw-bold"></label>
+                        <select class="form-select" asp-for="UpdateProductDTO.CategoryId" asp-items="Model.Categories"></select>
+                        <span asp-validation-for="UpdateProductDTO.CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary fw-bold">Update</button>
+                        <a asp-action="GetAllProducts" asp-controller="Product" asp-area="ContentManagerPanel" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </form>
+                <!-- End of Update Product Form -->
             </div>
-            <div class="form-group">
-                <label asp-for="UpdateProductDTO.Description" class="control-label"></label>
-                <input asp-for="UpdateProductDTO.Description" class="form-control" />
-                <span asp-validation-for="UpdateProductDTO.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdateProductDTO.Price" class="control-label"></label>
-                <input asp-for="UpdateProductDTO.Price" class="form-control" />
-                <span asp-validation-for="UpdateProductDTO.Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdateProductDTO.MaterialId" class="control-label"></label>
-                <select asp-for="UpdateProductDTO.MaterialId" class="form-select" asp-items="@Model.Materials"></select>
-                <span asp-validation-for="UpdateProductDTO.MaterialId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdateProductDTO.CategoryId" class="control-label"></label>
-                <select asp-for="UpdateProductDTO.CategoryId" class="form-select" asp-items="@Model.Categories"></select>
-                <span asp-validation-for="UpdateProductDTO.CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="GetAllProducts" asp-controller="Product" asp-area="AdminPanel">Back to List</a>
 </div>
 
 @section Scripts {

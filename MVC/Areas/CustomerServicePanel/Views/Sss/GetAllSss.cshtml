@@ -1,0 +1,48 @@
+﻿@using MVC.Areas.CustomerServicePanel.Models.DTOs.Sss
+@model IEnumerable<SssDTO>
+
+@{
+    ViewData["Title"] = "GetAllSss";
+}
+
+<h1>Get All Sss</h1>
+
+<p>
+    <a asp-controller="Sss" asp-action="AddSss">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.AskTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AskTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    <a class="btn btn-outline-info" asp-route-id="@item.Id" asp-controller="Sss" asp-action="UpdateSss" asp-area="CustomerServicePanel">
+                        Edit
+                    </a>
+                    <a class="btn btn-outline-danger" asp-route-id="@item.Id" asp-controller="Sss" asp-action="DeleteSss" asp-area="CustomerServicePanel">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

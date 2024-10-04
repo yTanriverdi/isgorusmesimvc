@@ -44,12 +44,12 @@ namespace MVC.Controllers
                     {
                         // Kullanıcı için claims listesi oluştur
                         List<Claim> claims = new List<Claim>()
-                {
-                    new Claim(ClaimTypes.Name, userLoginResult.AppUser.FirstName),
-                    new Claim(ClaimTypes.NameIdentifier, userLoginResult.AppUser.Id.ToString()),
-                    new Claim("Id", userLoginResult.AppUser.Id.ToString()),
-                    new Claim(ClaimTypes.Role,userLoginResult.UserRoles.FirstOrDefault())
-                };
+    {
+        new Claim(ClaimTypes.Name, userLoginResult.AppUser.FirstName),
+        new Claim(ClaimTypes.NameIdentifier, userLoginResult.AppUser.Id.ToString()),
+        new Claim("Id", userLoginResult.AppUser.Id.ToString()),
+        new Claim(ClaimTypes.Role,userLoginResult.UserRoles.FirstOrDefault())
+    };
 
                         // Claims identity ve authentication properties oluştur
                         ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -67,23 +67,36 @@ namespace MVC.Controllers
 
                         //rolü neyse o areaya yönlendiriyor
                         if (userLoginResult.UserRoles.Contains("Admin"))
+                        {
+                            TempData["SuccessMessage"] = "Welcome, Admin!";
                             return RedirectToAction("Index", "User", new { area = "AdminPanel" });
-                        //return RedirectToAction("Index", "Home");
+                        }
                         else if (userLoginResult.UserRoles.Contains("ContentManager"))
+                        {
+                            TempData["SuccessMessage"] = "Welcome, Content Manager!";
                             return RedirectToAction("GetAllProducts", "Product", new { area = "ContentManagerPanel" });
+                        }
                         else if (userLoginResult.UserRoles.Contains("CustomerService"))
-                            return RedirectToAction("GetUserDetails", "User", new { area = "CustomerServicePanel" });
+                        {
+                            TempData["SuccessMessage"] = "Welcome, Customer Service!";
+                            return RedirectToAction("GetAllOfferCartsForCustomerService", "OfferCart", new { area = "CustomerServicePanel" });
+                        }
                         else if (userLoginResult.UserRoles.Contains("Visitor"))
+                        {
+                            TempData["SuccessMessage"] = "Welcome to the Visitor area!";
                             return RedirectToAction("Index", "Home", new { area = "Visitor" });
+                        }
                     }
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Email veya şifre hatalı.");
+                        TempData["ErrorMessage"] = "Invalid email or password.";
                     }
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "API isteği başarısız.");
+                    TempData["ErrorMessage"] = "API request failed.";
                 }
             }
             return View(vm); //giriş başarısız olursa da aynı sayfada bizi tutacak tüm bilgilerle
@@ -106,6 +119,7 @@ namespace MVC.Controllers
                 var response = await _httpClient.PostAsJsonAsync($"{uri}/CreateUser", user);
                 if (response.IsSuccessStatusCode)
                 {
+                    TempData["SuccessMessage"] = "Kayıt başarıyla oluşturuldu.";
                     return RedirectToAction("Login", "Account");
                 }
             }
@@ -114,6 +128,7 @@ namespace MVC.Controllers
                 ModelState.AddModelError(string.Empty, "Kullanıcı oluşturulurken bir hata meydana geldi");
                 return BadRequest(ModelState);
             }
+            TempData["ErrorMessage"] = "Kayıt başarısız!";
             return View(user);
         }
 

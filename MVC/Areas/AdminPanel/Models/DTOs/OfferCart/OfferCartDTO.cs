@@ -19,6 +19,7 @@ namespace MVC.Areas.AdminPanel.Models.DTOs.OfferCart
         public decimal TotalPrice { get; set; }
 
         public bool IsRefundRequest { get; set; } = false; // iade talebi
+        public bool RefundCustomerService { get; set; } = false;
 
         public bool AcceptRefundRequest { get; set; } = false; // iade işlemi onayı (Admin)
 

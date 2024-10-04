@@ -5,31 +5,72 @@
     ViewBag.Title = "Resim Yükleme";
 }
 
-<h2>Ürün Resmi Yükleme</h2>
+<h5 class="card-titlmb-4">Ürün Resmi Yükleme</h5>
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-lg-6">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
 
-<div class="container">
-    <form asp-action="UpdateProductImage" asp-controller="Product" asp-area="AdminPanel" method="post" enctype="multipart/form-data">
-        <input type="hidden" asp-for="ProductId" />
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
 
-        <div class="form-group">
-            <label asp-for="File">Resim Seçin:</label>
-            <input asp-for="File" type="file" class="form-control-file" accept="image/*" required />
+        <div class="card border shadow-lg rounded">
+            <div class="card-body p-4">
+                <!-- Ürün Resmi Yükleme Formu -->
+                <form asp-action="UpdateProductImage" asp-controller="Product" asp-area="AdminPanel" method="post" enctype="multipart/form-data" class="row g-3">
+                    <input type="hidden" asp-for="ProductId" />
+
+                    <div id="fileInputs">
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-bold">Choose a picture:</label>
+                            <input name="Files" type="file" class="form-control" accept="image/*" onchange="addNewFileInput(this)" />
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary fw-bold">Resimleri Yükle</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <button type="submit" class="btn btn-primary">Resmi Yükle</button>
-    </form>
-
-    @if (ViewBag.ErrorMessage != null)
-    {
-        <div class="alert alert-danger mt-3">
-            @ViewBag.ErrorMessage
-        </div>
-    }
-
-    @if (ViewBag.SuccessMessage != null)
-    {
-        <div class="alert alert-success mt-3">
-            @ViewBag.SuccessMessage
-        </div>
-    }
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        function addNewFileInput(input) {
+            // Eğer bir dosya seçildiyse yeni bir input alanı ekle
+            if (input.files.length > 0) {
+                var fileInputsContainer = document.getElementById('fileInputs');
+                var newInputDiv = document.createElement('div');
+                newInputDiv.className = 'col-12 mb-3';
+
+                var newLabel = document.createElement('label');
+                newLabel.className = 'form-label fw-bold';
+                newLabel.textContent = 'Choose another picture:';
+
+                var newInput = document.createElement('input');
+                newInput.name = 'Files';
+                newInput.type = 'file';
+                newInput.className = 'form-control';
+                newInput.accept = 'image/*';
+                newInput.onchange = function () { addNewFileInput(this); };
+
+                newInputDiv.appendChild(newLabel);
+                newInputDiv.appendChild(newInput);
+
+                fileInputsContainer.appendChild(newInputDiv);
+            }
+        }
+    </script>
+}

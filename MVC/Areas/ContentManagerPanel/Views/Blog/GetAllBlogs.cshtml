@@ -4,7 +4,7 @@
     ViewData["Title"] = "GetAllBlogs";
 }
 
-<h1>GetAllBlogs</h1>
+<h1>News & Blogs</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -52,12 +52,23 @@
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                    @if (item.ImageUrl != null)
+                    {
+                        <img src="~/BlogImages/@item.ImageUrl" alt="Blog Image" style="width:130px; height:100px;" />
+                    }
+                    else
+                    {
+                        <img src="~/BlogImages/default.png" alt="Blog Image" style="width:130px; height:100px;" />
+                    }
                 </td>
                 <td>
                     <a class="btn btn-warning" asp-area="ContentManagerPanel" asp-controller="Blog" asp-action="Update" asp-route-id="@item.BlogId">Update</a> |
                     @Html.ActionLink("Details", "Details", new { id = item.BlogId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BlogId })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BlogId }) |
+                    @if (item.ImageUrl==null)
+                    {
+                        <a class="btn btn-primary btn-sm" asp-action="UpdateBlogImage" asp-controller="Blog" asp-area="ContentManagerPanel" asp-route-BlogId="@item.BlogId">Add Picture</a>
+                    }
             </tr>
         }
     </tbody>
